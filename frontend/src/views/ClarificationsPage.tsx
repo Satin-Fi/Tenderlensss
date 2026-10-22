@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import {
+  TenderLensLogo,
+  RulebookCodex,
+  AuditChain,
+  VerifiedVendor,
+  GeMShield
+} from '../components/AstraIcons';
+import {
   MessageSquare,
   Send,
   Clock,
   CheckCircle2,
   AlertCircle,
   FileText,
-  User,
-  ShieldCheck,
-  Building2
+  UserCheck,
+  Building2,
+  Sparkles
 } from 'lucide-react';
 import { Clarification } from '../types';
 import { api } from '../services/api';
@@ -50,93 +57,118 @@ export const ClarificationsPage: React.FC<ClarificationsPageProps> = ({ isOffice
   };
 
   if (loading) {
-    return <div className="py-20 text-center text-xs text-slate-400">Loading clarifications inbox...</div>;
+    return (
+      <div className="py-24 text-center">
+        <div className="w-8 h-8 border-2 border-[#6750A4] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+        <p className="text-xs text-[#8C8298]">Loading clarification records...</p>
+      </div>
+    );
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      <div className="pb-4 border-b border-slate-200">
-        <h1 className="text-xl font-bold text-slate-900">Clarification Communications Inbox</h1>
-        <p className="text-xs text-slate-500 mt-0.5">
-          Formal query-response thread between Procuring Officers and Bidders, audited under GFR Rule 173.
-        </p>
+    <div className="max-w-5xl mx-auto space-y-8 animate-in fade-in duration-300">
+      <div className="porcelain-card p-6 sm:p-7 rounded-[26px] border border-white/80 bg-white/80 backdrop-blur-2xl shadow-sm flex items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-[10px] font-bold bg-[#EEE8FA] text-[#6750A4] px-2.5 py-0.5 rounded-full border border-[#6750A4]/20">
+              GFR 2017 RULE 173 AUDITED CHANNEL
+            </span>
+          </div>
+          <h1 className="text-xl sm:text-2xl font-extrabold text-[#352A45] tracking-tight">
+            Clarifications & Legal Inquiries
+          </h1>
+          <p className="text-xs text-[#7A7088] mt-0.5">
+            Formal, immutable query-response thread between Procuring Officers and Bidders.
+          </p>
+        </div>
+
+        <div className="hidden sm:flex items-center gap-2 p-2 rounded-2xl bg-[#FAF9FD] border border-[#352A45]/[0.06] text-xs font-bold text-[#6750A4]">
+          <RulebookCodex className="w-4 h-4 text-[#6750A4]" />
+          <span>{isOfficer ? 'Procurement Officer Desk' : 'Supplier Response Desk'}</span>
+        </div>
       </div>
 
       {clarifications.length === 0 ? (
-        <div className="py-20 text-center text-xs text-slate-400">No active clarification queries.</div>
+        <div className="porcelain-card p-16 rounded-[28px] border border-white/80 bg-white/70 text-center">
+          <MessageSquare className="w-10 h-10 text-[#8C8298] mx-auto mb-3 opacity-40" />
+          <h3 className="text-sm font-bold text-[#352A45]">No Active Clarifications</h3>
+          <p className="text-xs text-[#8C8298] mt-1">All bidder queries and technical inquiries have been resolved.</p>
+        </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-5">
           {clarifications.map((c) => {
             const isReplied = c.status === 'Replied' || c.status === 'Closed';
 
             return (
               <div
                 key={c.id}
-                className="bg-white rounded-2xl p-6 border border-slate-100 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.04)] space-y-4"
+                className="porcelain-card p-6 sm:p-7 rounded-[26px] border border-white/80 bg-white/85 backdrop-blur-xl shadow-xs space-y-5"
               >
                 {/* Header */}
-                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-mono text-slate-400">Ref #CLR-{c.id}</span>
-                    <span className="text-xs font-bold text-slate-800">Tender #{c.tender_id}</span>
-                    <span className="text-xs text-slate-500 font-medium">| Bidder: <b>{c.vendor_name}</b></span>
+                <div className="flex items-center justify-between pb-3.5 border-b border-[#352A45]/[0.06]">
+                  <div className="flex items-center gap-3">
+                    <span className="text-[11px] font-mono font-bold text-[#6750A4] bg-[#EEE8FA] px-2 py-0.5 rounded-md">
+                      Ref #CLR-{c.id}
+                    </span>
+                    <span className="text-xs font-extrabold text-[#352A45]">
+                      {c.vendor_name}
+                    </span>
                   </div>
 
                   <span
-                    className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full ${
+                    className={`inline-flex items-center gap-1.5 text-[10px] font-extrabold px-3 py-1 rounded-full ${
                       isReplied
-                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                        : 'bg-amber-50 text-amber-700 border border-amber-200'
+                        ? 'bg-[#E6F3EA] text-[#0D5438] border border-[#1E8E62]/30'
+                        : 'bg-[#FFF3D6] text-[#784805] border border-[#D48806]/30'
                     }`}
                   >
-                    {isReplied ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
-                    {c.status.toUpperCase()}
+                    {isReplied ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Clock className="w-3.5 h-3.5" />}
+                    <span>{isReplied ? 'Resolved & Replied' : 'Awaiting Formal Response'}</span>
                   </span>
                 </div>
 
-                {/* Officer Query */}
-                <div className="p-3.5 rounded-xl bg-purple-50/50 border border-purple-100 text-xs">
-                  <div className="flex items-center gap-1.5 font-bold text-slate-900 mb-1">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#7C6BC4]" />
-                    <span>Government Officer Query:</span>
-                    <span className="text-[10px] text-slate-400 font-normal ml-auto">
-                      {new Date(c.created_at).toLocaleString()}
-                    </span>
+                {/* Query Body */}
+                <div className="p-4 rounded-2xl bg-[#FAF9FD] border border-[#352A45]/[0.06] space-y-1.5">
+                  <div className="flex items-center justify-between text-[10px] text-[#8C8298] font-bold uppercase tracking-wider">
+                    <span>Officer Query / Deficiency Raised:</span>
+                    <span>{new Date(c.created_at).toLocaleString()}</span>
                   </div>
-                  <p className="text-slate-700 leading-relaxed font-sans">{c.query_text}</p>
+                  <p className="text-xs text-[#352A45] leading-relaxed font-medium">
+                    {c.query_text}
+                  </p>
                 </div>
 
                 {/* Vendor Reply */}
                 {c.response_text ? (
-                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-100 text-xs">
-                    <div className="flex items-center gap-1.5 font-bold text-slate-900 mb-1">
-                      <Building2 className="w-3.5 h-3.5 text-emerald-600" />
-                      <span>Vendor Submitted Reply:</span>
-                      <span className="text-[10px] text-slate-400 font-normal ml-auto">
-                        {c.replied_at ? new Date(c.replied_at).toLocaleString() : ''}
-                      </span>
+                  <div className="p-4 rounded-2xl bg-[#E6F3EA]/50 border border-[#1E8E62]/20 space-y-1.5">
+                    <div className="flex items-center justify-between text-[10px] text-[#0D5438] font-bold uppercase tracking-wider">
+                      <span>Vendor Clarification Response:</span>
+                      {c.replied_at && <span>{new Date(c.replied_at).toLocaleString()}</span>}
                     </div>
-                    <p className="text-slate-700 leading-relaxed font-sans">{c.response_text}</p>
+                    <p className="text-xs text-[#0D5438] leading-relaxed font-medium">
+                      {c.response_text}
+                    </p>
                   </div>
                 ) : (
-                  /* Reply Form for Vendor */
-                  <div className="space-y-2 pt-2">
-                    <label className="text-xs font-semibold text-slate-700">Submit Your Formal Reply & Evidence:</label>
+                  <div className="space-y-3 pt-2">
+                    <label className="text-xs font-bold text-[#352A45] block">
+                      {isOfficer ? 'Supplemental Officer File Noting:' : 'Enter Formal Vendor Explanation / Certificate Reference:'}
+                    </label>
                     <textarea
                       rows={3}
                       value={replyText[c.id] || ''}
                       onChange={(e) => setReplyText({ ...replyText, [c.id]: e.target.value })}
-                      placeholder="Type official explanation or reference attached documents..."
-                      className="w-full text-xs p-3 rounded-xl border border-slate-200 focus:outline-hidden focus:ring-2 focus:ring-[#7C6BC4]/20"
+                      placeholder={isOfficer ? "Enter supplementary remarks..." : "State your formal explanation with IS standard license / CA certificate number..."}
+                      className="w-full text-xs p-3.5 rounded-xl border border-[#352A45]/[0.12] bg-[#FAF9FD] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#6750A4]/20 text-[#352A45]"
                     />
                     <div className="flex justify-end">
                       <button
                         onClick={() => handleSendReply(c.id)}
-                        disabled={submittingId === c.id}
-                        className="px-4 py-2 bg-[#7C6BC4] hover:bg-[#6957B7] text-white text-xs font-semibold rounded-xl flex items-center gap-1.5 transition-colors disabled:opacity-50"
+                        disabled={submittingId === c.id || !replyText[c.id]?.trim()}
+                        className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#6750A4] to-[#4D3C7C] hover:brightness-105 text-white text-xs font-bold shadow-xs flex items-center gap-2 cursor-pointer disabled:opacity-50"
                       >
                         <Send className="w-3.5 h-3.5" />
-                        {submittingId === c.id ? 'Submitting...' : 'Submit Formal Reply'}
+                        <span>{submittingId === c.id ? 'Submitting...' : 'Dispatch Signed Clarification'}</span>
                       </button>
                     </div>
                   </div>

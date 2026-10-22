@@ -110,7 +110,7 @@ export function App() {
   const isOfficer = currentUser.role === 'officer';
 
   return (
-    <div className="flex h-screen bg-[#F1F2F8] overflow-hidden">
+    <div className="flex h-screen bg-[#F8F7FB] dot-grid-bg overflow-hidden text-[#352A45] antialiased">
       {/* Sidebar Navigation */}
       {!sidebarCollapsed && <Sidebar
         currentTab={currentTab}
@@ -123,7 +123,7 @@ export function App() {
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-        <div className="sticky top-0 z-30 flex items-center gap-3 px-5 py-2 bg-[#F1F2F8]/95 backdrop-blur border-b border-slate-200/80">
+        <div className="sticky top-0 z-40 flex items-center gap-3 px-5 py-2 glass-nav border-b border-[#352A45]/[0.08]">
           <button type="button" aria-label={sidebarCollapsed ? "Expand dashboard navigation" : "Collapse dashboard navigation"} onClick={() => setSidebarCollapsed(v => !v)} className="p-2 rounded-xl text-slate-600 hover:text-violet-700 hover:bg-violet-100 transition-colors cursor-pointer">
             <Menu className="w-5 h-5" />
           </button>

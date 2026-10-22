@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import {
-  LayoutDashboard,
-  FileText,
-  UploadCloud,
-  CheckSquare,
-  ShieldCheck,
-  History,
-  MessageSquareText,
-  Layers,
+  TenderLensLogo,
+  GeMShield,
+  AiScanner,
+  QcbsGauge,
+  AuditChain,
+  RulebookCodex,
+  VerifiedVendor,
+  BisLicenceSeal,
+  RupeeCoin
+} from './AstraIcons';
+import {
   ChevronDown,
   ChevronRight,
-  ExternalLink,
-  Award,
+  Layers,
   Sparkles,
-  Building2,
-  FolderOpen
+  ExternalLink,
+  ShieldCheck,
+  CheckCircle2
 } from 'lucide-react';
 import { User } from '../types';
 
@@ -39,199 +42,238 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const isOfficer = currentUser?.role === 'officer';
 
   const categories = [
-    { name: 'Cement', code: 'IS 269, IS 4031', tag: 'Full Demo' },
-    { name: 'TMT Steel', code: 'IS 1786', tag: 'Seeded' },
-    { name: 'PVC Pipes', code: 'IS 4985', tag: 'Seeded' },
-    { name: 'Services', code: 'QCBS / ISO', tag: 'Seeded' }
+    { name: 'Cement', code: 'IS 269, IS 4031', tag: 'Full Demo', color: 'bg-[#EEE8FA] text-[#6750A4]' },
+    { name: 'TMT Steel', code: 'IS 1786', tag: 'IS Standard', color: 'bg-[#E8F0FC] text-[#2970FF]' },
+    { name: 'PVC Pipes', code: 'IS 4985', tag: 'IS Standard', color: 'bg-[#FFF3D6] text-[#D48806]' },
+    { name: 'Services', code: 'QCBS / ISO', tag: 'GFR 2017', color: 'bg-[#E6F3EA] text-[#1E8E62]' }
   ];
 
   return (
-    <aside className="w-64 bg-[#FDFDFF] border-r border-slate-200/80 flex flex-col h-screen sticky top-0 shrink-0 select-none">
+    <aside className="w-68 bg-[#FBFBFE]/90 backdrop-blur-2xl border-r border-[#352A45]/[0.08] flex flex-col h-screen sticky top-0 shrink-0 select-none transition-all z-20">
       {/* Brand Header */}
-      <div className="h-16 px-5 flex items-center justify-between border-b border-slate-100">
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#7C6BC4] to-[#9987E8] flex items-center justify-center text-white shadow-md shadow-[#7C6BC4]/20">
-            <ShieldCheck className="w-5 h-5" />
+      <div className="h-20 px-6 flex items-center justify-between border-b border-[#352A45]/[0.06]">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#6750A4] to-[#8C75AC] flex items-center justify-center text-white shadow-md shadow-[#6750A4]/25 p-2">
+            <TenderLensLogo className="w-6 h-6 text-white" />
           </div>
           <div>
-            <div className="font-extrabold text-slate-900 text-base tracking-tight flex items-center gap-1.5">
+            <div className="font-extrabold text-[#352A45] text-[17px] tracking-tight flex items-center gap-1.5">
               TenderLens
-              <span className="text-[10px] bg-purple-50 text-[#7C6BC4] font-bold px-1.5 py-0.2 rounded-md border border-purple-100">
-                PRO
+              <span className="text-[9px] bg-[#EEE8FA] text-[#6750A4] font-bold px-1.5 py-0.5 rounded-full border border-[#6750A4]/20">
+                AI PRO
               </span>
             </div>
-            <div className="text-[10px] text-slate-400 font-medium">GovProcure AI Agent</div>
+            <div className="text-[10px] text-[#7E738B] font-medium flex items-center gap-1">
+              <span>National Procurement Engine</span>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Navigation Links */}
-      <div className="flex-1 overflow-y-auto px-3.5 py-4 space-y-6">
+      <div className="flex-1 overflow-y-auto px-4 py-5 space-y-6">
         {/* Main Section */}
         <div>
-          <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-2.5 mb-2">
-            Main Navigation
+          <div className="text-[10px] font-bold text-[#8C8298] uppercase tracking-wider px-3 mb-2.5 flex items-center justify-between">
+            <span>{isOfficer ? 'Procurement Control' : 'Supplier Desk'}</span>
+            <span className="text-[9px] font-semibold text-[#1E8E62] bg-[#E6F3EA] px-1.5 py-0.5 rounded">
+              {isOfficer ? 'GFR 2017' : 'Empanelled'}
+            </span>
           </div>
-          <nav className="space-y-1">
+
+          <nav className="space-y-1.5">
+            {/* Common Dashboard */}
             <button
               onClick={() => onSelectTab('dashboard')}
-              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
                 currentTab === 'dashboard'
-                  ? 'bg-[#7C6BC4] text-white shadow-md shadow-[#7C6BC4]/25'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
+                  : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
               }`}
             >
-              <LayoutDashboard className="w-4 h-4 shrink-0" />
-              <span>Dashboard</span>
+              <div className={`p-1 rounded-lg ${currentTab === 'dashboard' ? 'bg-[#EEE8FA] text-[#6750A4]' : 'text-[#8C8298]'}`}>
+                <QcbsGauge className="w-4 h-4" />
+              </div>
+              <span className="flex-1 text-left">Dashboard</span>
+              {currentTab === 'dashboard' && (
+                <span className="w-1.5 h-1.5 rounded-full bg-[#6750A4]" />
+              )}
             </button>
 
             {isOfficer ? (
               <>
                 <button
                   onClick={() => onSelectTab('upload-nit')}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
                     currentTab === 'upload-nit'
-                      ? 'bg-[#7C6BC4] text-white shadow-md shadow-[#7C6BC4]/25'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                      ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
+                      : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
                   }`}
                 >
-                  <UploadCloud className="w-4 h-4 shrink-0" />
-                  <span>Upload & Review NIT</span>
+                  <div className={`p-1 rounded-lg ${currentTab === 'upload-nit' ? 'bg-[#EEE8FA] text-[#6750A4]' : 'text-[#8C8298]'}`}>
+                    <AiScanner className="w-4 h-4" />
+                  </div>
+                  <span className="flex-1 text-left">Upload & Ingest NIT</span>
+                  <span className="text-[9px] bg-[#E6F3EA] text-[#1E8E62] font-bold px-1.5 py-0.2 rounded">
+                    OCR
+                  </span>
                 </button>
 
                 <button
                   onClick={() => onSelectTab('tenders')}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
                     currentTab === 'tenders'
-                      ? 'bg-[#7C6BC4] text-white shadow-md shadow-[#7C6BC4]/25'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                      ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
+                      : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
                   }`}
                 >
-                  <FileText className="w-4 h-4 shrink-0" />
-                  <span>Tender Management</span>
+                  <div className={`p-1 rounded-lg ${currentTab === 'tenders' ? 'bg-[#EEE8FA] text-[#6750A4]' : 'text-[#8C8298]'}`}>
+                    <GeMShield className="w-4 h-4" />
+                  </div>
+                  <span className="flex-1 text-left">Tender Ledger</span>
                 </button>
 
                 <button
                   onClick={() => onSelectTab('evaluation')}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
                     currentTab === 'evaluation'
-                      ? 'bg-[#7C6BC4] text-white shadow-md shadow-[#7C6BC4]/25'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                      ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
+                      : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
                   }`}
                 >
-                  <CheckSquare className="w-4 h-4 shrink-0" />
-                  <span>Evaluation & Ranking</span>
+                  <div className={`p-1 rounded-lg ${currentTab === 'evaluation' ? 'bg-[#EEE8FA] text-[#6750A4]' : 'text-[#8C8298]'}`}>
+                    <RupeeCoin className="w-4 h-4" />
+                  </div>
+                  <span className="flex-1 text-left">QCBS Evaluation Matrix</span>
+                  <span className="text-[9px] bg-[#FFF3D6] text-[#D48806] font-bold px-1.5 py-0.2 rounded">
+                    L1/QCBS
+                  </span>
                 </button>
 
                 <button
                   onClick={() => onSelectTab('audit-log')}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
                     currentTab === 'audit-log'
-                      ? 'bg-[#7C6BC4] text-white shadow-md shadow-[#7C6BC4]/25'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                      ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
+                      : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
                   }`}
                 >
-                  <History className="w-4 h-4 shrink-0" />
-                  <span>Audit Trail</span>
+                  <div className={`p-1 rounded-lg ${currentTab === 'audit-log' ? 'bg-[#EEE8FA] text-[#6750A4]' : 'text-[#8C8298]'}`}>
+                    <AuditChain className="w-4 h-4" />
+                  </div>
+                  <span className="flex-1 text-left">Audit Vault</span>
                 </button>
               </>
             ) : (
               <>
                 <button
-                  onClick={() => onSelectTab('vendor-profile')}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
-                    currentTab === 'vendor-profile'
-                      ? 'bg-[#7C6BC4] text-white shadow-md shadow-[#7C6BC4]/25'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  onClick={() => onSelectTab('tender-discovery')}
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
+                    currentTab === 'tender-discovery'
+                      ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
+                      : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
                   }`}
                 >
-                  <Building2 className="w-4 h-4 shrink-0" />
-                  <span>Profile Builder Wizard</span>
+                  <div className={`p-1 rounded-lg ${currentTab === 'tender-discovery' ? 'bg-[#EEE8FA] text-[#6750A4]' : 'text-[#8C8298]'}`}>
+                    <AiScanner className="w-4 h-4" />
+                  </div>
+                  <span className="flex-1 text-left">Tender Discovery</span>
+                  <span className="text-[9px] bg-[#E6F3EA] text-[#1E8E62] font-bold px-1.5 py-0.2 rounded">
+                    Match AI
+                  </span>
+                </button>
+
+                <button
+                  onClick={() => onSelectTab('vendor-profile')}
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
+                    currentTab === 'vendor-profile'
+                      ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
+                      : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
+                  }`}
+                >
+                  <div className={`p-1 rounded-lg ${currentTab === 'vendor-profile' ? 'bg-[#EEE8FA] text-[#6750A4]' : 'text-[#8C8298]'}`}>
+                    <VerifiedVendor className="w-4 h-4" />
+                  </div>
+                  <span className="flex-1 text-left">Enterprise Profile</span>
                 </button>
 
                 <button
                   onClick={() => onSelectTab('doc-verify')}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
                     currentTab === 'doc-verify'
-                      ? 'bg-[#7C6BC4] text-white shadow-md shadow-[#7C6BC4]/25'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                      ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
+                      : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
                   }`}
                 >
-                  <ShieldCheck className="w-4 h-4 shrink-0" />
-                  <span>Document Verification</span>
-                </button>
-
-                <button
-                  onClick={() => onSelectTab('tender-discovery')}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
-                    currentTab === 'tender-discovery'
-                      ? 'bg-[#7C6BC4] text-white shadow-md shadow-[#7C6BC4]/25'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                  }`}
-                >
-                  <FileText className="w-4 h-4 shrink-0" />
-                  <span>Tender Discovery</span>
+                  <div className={`p-1 rounded-lg ${currentTab === 'doc-verify' ? 'bg-[#EEE8FA] text-[#6750A4]' : 'text-[#8C8298]'}`}>
+                    <BisLicenceSeal className="w-4 h-4" />
+                  </div>
+                  <span className="flex-1 text-left">Doc Verification Vault</span>
                 </button>
 
                 <button
                   onClick={() => onSelectTab('my-applications')}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
                     currentTab === 'my-applications'
-                      ? 'bg-[#7C6BC4] text-white shadow-md shadow-[#7C6BC4]/25'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                      ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
+                      : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
                   }`}
                 >
-                  <Award className="w-4 h-4 shrink-0" />
-                  <span>My Applications</span>
+                  <div className={`p-1 rounded-lg ${currentTab === 'my-applications' ? 'bg-[#EEE8FA] text-[#6750A4]' : 'text-[#8C8298]'}`}>
+                    <GeMShield className="w-4 h-4" />
+                  </div>
+                  <span className="flex-1 text-left">Submitted Applications</span>
                 </button>
               </>
             )}
 
             <button
               onClick={() => onSelectTab('clarifications')}
-              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
                 currentTab === 'clarifications'
-                  ? 'bg-[#7C6BC4] text-white shadow-md shadow-[#7C6BC4]/25'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
+                  : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
               }`}
             >
-              <MessageSquareText className="w-4 h-4 shrink-0" />
-              <span>Clarifications Inbox</span>
+              <div className={`p-1 rounded-lg ${currentTab === 'clarifications' ? 'bg-[#EEE8FA] text-[#6750A4]' : 'text-[#8C8298]'}`}>
+                <RulebookCodex className="w-4 h-4" />
+              </div>
+              <span className="flex-1 text-left">Clarifications Desk</span>
             </button>
           </nav>
         </div>
 
-        {/* TENDER CATEGORIES - Collapsible Group */}
-        <div>
+        {/* TENDER CATEGORIES / GFR RULEBOOKS */}
+        <div className="pt-2">
           <button
             onClick={() => setCategoriesOpen(!categoriesOpen)}
-            className="w-full flex items-center justify-between text-[11px] font-bold text-slate-400 uppercase tracking-wider px-2.5 mb-2 hover:text-slate-600 transition-colors"
+            className="w-full flex items-center justify-between text-[10px] font-bold text-[#8C8298] uppercase tracking-wider px-3 mb-2.5 hover:text-[#352A45] transition-colors"
           >
             <span className="flex items-center gap-1.5">
-              <Layers className="w-3.5 h-3.5 text-[#7C6BC4]" />
-              Tender Categories
+              <Layers className="w-3.5 h-3.5 text-[#6750A4]" />
+              Rulebook Standards
             </span>
-            {categoriesOpen ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
+            {categoriesOpen ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
           </button>
 
           {categoriesOpen && (
-            <div className="space-y-1 pl-1">
+            <div className="space-y-1.5 pl-1">
               {categories.map((cat) => {
                 const isSelected = selectedCategory === cat.name;
                 return (
                   <div
                     key={cat.name}
-                    className={`group flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs font-medium transition-colors ${
+                    className={`group flex items-center justify-between px-3 py-2 rounded-2xl text-xs font-medium transition-all ${
                       isSelected
-                        ? 'bg-purple-50 text-[#7C6BC4] font-semibold'
-                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                        ? 'bg-[#EEE8FA] text-[#6750A4] font-semibold border border-[#6750A4]/20'
+                        : 'text-[#6C617A] hover:bg-white/70 hover:text-[#352A45]'
                     }`}
                   >
                     <button
                       onClick={() => onSelectCategory(cat.name)}
                       className="flex-1 text-left flex items-center gap-2 truncate"
                     >
-                      <span className={`w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-[#7C6BC4]' : 'bg-slate-300'}`} />
+                      <span className={`w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-[#6750A4]' : 'bg-[#D2C8E0]'}`} />
                       <span className="truncate">{cat.name}</span>
                     </button>
 
@@ -240,10 +282,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         e.stopPropagation();
                         onOpenRulebook(cat.name);
                       }}
-                      className="text-[10px] text-slate-400 hover:text-[#7C6BC4] px-1.5 py-0.5 rounded-md hover:bg-white/80 transition-colors"
-                      title={`View ${cat.name} Rulebook`}
+                      className="text-[10px] text-[#8C8298] hover:text-[#6750A4] px-2 py-0.5 rounded-lg hover:bg-white/90 border border-transparent hover:border-[#6750A4]/20 transition-all flex items-center gap-1"
+                      title={`Inspect ${cat.name} GFR Rulebook`}
                     >
-                      Rulebook
+                      <span>Rules</span>
                     </button>
                   </div>
                 );
@@ -251,11 +293,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
               <button
                 onClick={() => onSelectCategory('All')}
-                className={`w-full text-left px-2.5 py-1 text-[11px] font-medium transition-colors ${
-                  selectedCategory === 'All' ? 'text-[#7C6BC4] font-bold' : 'text-slate-400 hover:text-slate-600'
+                className={`w-full text-left px-3 py-1.5 text-[11px] font-semibold transition-colors ${
+                  selectedCategory === 'All' ? 'text-[#6750A4]' : 'text-[#8C8298] hover:text-[#352A45]'
                 }`}
               >
-                Show All Categories
+                ← View All Categories
               </button>
             </div>
           )}
@@ -263,22 +305,31 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       {/* Footer Role / Mode Badge */}
-      <div className="p-3.5 border-t border-slate-100 bg-slate-50/60">
-        <div className="flex items-center gap-2.5 p-2 rounded-xl bg-white border border-slate-100">
+      <div className="p-4 border-t border-[#352A45]/[0.06] bg-[#F7F5FC]/80 backdrop-blur-xl">
+        <div className="flex items-center gap-3 p-2.5 rounded-2xl bg-white border border-[#352A45]/[0.08] shadow-sm">
           <img
             src={currentUser?.avatar_url || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120"}
             alt="Avatar"
-            className="w-8 h-8 rounded-lg object-cover ring-1 ring-slate-200"
+            className="w-9 h-9 rounded-xl object-cover ring-2 ring-[#EEE8FA]"
           />
           <div className="flex-1 min-w-0">
-            <div className="text-xs font-bold text-slate-800 truncate">
-              {currentUser?.name || "Rajesh Sharma"}
+            <div className="text-xs font-bold text-[#352A45] truncate">
+              {currentUser?.name || "Shri A.K. Sharma"}
             </div>
-            <div className="text-[10px] text-slate-500 font-medium capitalize flex items-center gap-1">
-              <span className={`w-1.5 h-1.5 rounded-full ${isOfficer ? 'bg-indigo-500' : 'bg-emerald-500'}`} />
-              {isOfficer ? 'Govt Officer' : 'Vendor Portal'}
+            <div className="text-[10px] text-[#7A7088] font-medium capitalize flex items-center gap-1.5">
+              <span className={`w-1.5 h-1.5 rounded-full ${isOfficer ? 'bg-[#1E8E62]' : 'bg-[#2970FF]'}`} />
+              {isOfficer ? 'Govt Procurement Officer' : 'Empanelled Vendor'}
             </div>
           </div>
+        </div>
+
+        {/* Live System Telemetry Status */}
+        <div className="mt-2.5 flex items-center justify-between text-[9px] text-[#8C8298] px-1 font-medium">
+          <span className="flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#1E8E62] animate-pulse" />
+            GeM v3.2 Synced
+          </span>
+          <span>Rule 144(xi) Audit</span>
         </div>
       </div>
     </aside>

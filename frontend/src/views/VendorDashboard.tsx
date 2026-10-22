@@ -1,5 +1,15 @@
 import React from 'react';
 import {
+  TenderLensLogo,
+  GeMShield,
+  AiScanner,
+  QcbsGauge,
+  VerifiedVendor,
+  BisLicenceSeal,
+  RupeeCoin,
+  MetricSpark
+} from '../components/AstraIcons';
+import {
   FileText,
   CheckCircle2,
   Clock,
@@ -33,52 +43,65 @@ export const VendorDashboard: React.FC<VendorDashboardProps> = ({
   onNavigateTab,
   onApplyTender
 }) => {
-  const companyName = profile?.company_name || "Ultracem Infra Solutions Pvt Ltd";
+  const companyName = profile?.company_name || "UltraTech Cement Infrastructure Ltd";
   const completeness = profile?.completeness_pct || 95;
 
   const qualifiedBids = bids.filter(b => b.status === 'Qualified');
-  const disqualifiedBids = bids.filter(b => b.status === 'Disqualified');
   const openTenders = tenders.filter(t => t.status === 'Published' || t.status === 'Bids Open');
 
   return (
-    <div className="space-y-6">
-      {/* Greeting Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
-            Welcome back, {companyName}
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-            GSTIN: <span className="font-mono text-slate-700">{profile?.gstin || "07AABCU9603R1ZM"}</span> | Vendor Portal Active
-          </p>
-        </div>
+    <div className="space-y-8 animate-in fade-in duration-300">
+      {/* Top Banner */}
+      <div className="porcelain-card p-6 sm:p-8 rounded-[28px] border border-white/80 bg-white/80 backdrop-blur-2xl relative overflow-hidden shadow-[0_20px_50px_-25px_rgba(53,42,69,0.14)]">
+        <div className="absolute -top-12 -right-12 w-64 h-64 bg-[#E6F3EA]/70 rounded-full blur-3xl -z-10" />
+        <div className="absolute -bottom-12 -left-12 w-64 h-64 bg-[#EEE8FA]/60 rounded-full blur-3xl -z-10" />
 
-        <div className="flex items-center gap-2.5">
-          <button
-            onClick={() => onNavigateTab('tender-discovery')}
-            className="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-[#1E1B4B] hover:bg-[#2D2A5E] shadow-sm hover:shadow-md transition-all flex items-center gap-1.5"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-[#38BDF8]" />
-            Discover Matching Tenders
-          </button>
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="space-y-2 max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E6F3EA] text-[#0D5438] text-xs font-bold border border-[#1E8E62]/20">
+              <VerifiedVendor className="w-4 h-4 text-[#1E8E62]" />
+              <span>GeM Empanelled Class-1 Local Supplier</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#352A45]">
+              {companyName}
+            </h1>
+            <p className="text-xs sm:text-sm text-[#7A7088] leading-relaxed">
+              GSTIN: <span className="font-mono font-bold text-[#352A45]">{profile?.gstin || "07AABCU9603R1ZM"}</span> · CIN: <span className="font-mono text-[#6750A4] font-semibold">{profile?.cin || "L26940MH2000PLC128420"}</span> · BIS IS:269 Validated
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => onNavigateTab('tender-discovery')}
+              className="px-6 py-3 rounded-2xl text-xs font-extrabold text-white bg-gradient-to-r from-[#6750A4] to-[#4D3C7C] hover:brightness-105 shadow-[0_8px_20px_-6px_rgba(103,80,164,0.4)] flex items-center gap-2.5 transition-all cursor-pointer active:scale-[0.99]"
+            >
+              <AiScanner className="w-4 h-4 text-white" />
+              <span>Discover AI-Matched Tenders</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* KPI Stat Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* KPI Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <KpiCard
           label="Tenders Matched"
           value="14"
           trend="+76%"
           trendType="positive"
-          caption="from 8 (last weeks)"
+          caption="high eligibility match"
+          icon={<AiScanner className="w-5 h-5 text-[#6750A4]" />}
+          tone="lavender"
         />
         <KpiCard
-          label="Applications Submitted"
+          label="Active Bids"
           value={bids.length || 4}
           trend="+32%"
           trendType="positive"
-          caption="active bids"
+          caption="in evaluation queue"
+          icon={<FileText className="w-5 h-5 text-[#2970FF]" />}
+          tone="sky"
         />
         <KpiCard
           label="Shortlisted / Ranked L1"
@@ -86,128 +109,91 @@ export const VendorDashboard: React.FC<VendorDashboardProps> = ({
           trend="+100%"
           trendType="positive"
           caption="statutory compliant"
+          icon={<CheckCircle2 className="w-5 h-5 text-[#1E8E62]" />}
+          tone="mint"
         />
         <KpiCard
-          label="Documents Verified %"
-          value="100%"
+          label="Document Clearance"
+          value={`${completeness}%`}
           trend="5/5"
           trendType="positive"
           caption="BIS, GST & MCA clear"
+          icon={<BisLicenceSeal className="w-5 h-5 text-[#D48806]" />}
+          tone="butter"
         />
       </div>
 
-      {/* Main Grid: Chart + Profile Completeness Milestone Widget */}
+      {/* Chart + Widgets */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <TrafficChart />
         </div>
 
         <div className="space-y-6">
-          {/* Milestone Widget displaying vendor profile completeness */}
-          <MilestoneWidget
-            title="Vendor Profile & Trust Score"
-            metric={`${completeness}% Ready`}
-            description="Your statutory BIS certification and GST filings are verified. You are eligible for 100% of open cement tenders."
-            milestoneLabel="Profile Completeness Milestone"
-            startLabel="Basic"
-            endLabel="100% Tier-1"
-            percentage={completeness}
-            secondaryTitle="BIS Licence Registry Status"
-            secondaryPercentage={100}
-          />
           <TutorialCard />
+          <MilestoneWidget
+            title="Enterprise Credential Milestone"
+            metric={`${completeness}% Complete`}
+            description="All mandatory IS codes verified on BIS Manakonline. GST returns filed without red flags."
+            milestoneLabel="Statutory Profile Verification"
+            startLabel="0%"
+            endLabel="100%"
+            percentage={completeness}
+            secondaryTitle="Turnover Eligibility Index"
+            secondaryPercentage={92}
+          />
         </div>
       </div>
 
-      {/* Two Column Section: Matching Tenders & Notifications */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Open Tenders Matched */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.04)]">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
-            <div>
-              <h3 className="font-bold text-slate-900 text-sm">Matching Government Tenders</h3>
-              <p className="text-[11px] text-slate-400">Tenders aligned with your product IS certifications</p>
-            </div>
-            <button
-              onClick={() => onNavigateTab('tender-discovery')}
-              className="text-xs font-semibold text-[#7C6BC4] hover:underline flex items-center gap-1"
-            >
-              <span>View All</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+      {/* Open Tenders Matching Vendor Profile */}
+      <div className="porcelain-card rounded-[28px] border border-white/80 bg-white/80 backdrop-blur-2xl shadow-[0_20px_50px_-25px_rgba(53,42,69,0.12)] overflow-hidden">
+        <div className="p-6 border-b border-[#352A45]/[0.06] flex items-center justify-between">
+          <div>
+            <h3 className="font-extrabold text-[#352A45] text-base">
+              Recommended Procurement Notices For Your Entity
+            </h3>
+            <p className="text-xs text-[#7A7088] mt-0.5">
+              Filtered for your category capacity ({profile?.categories_supplied?.join(', ') || 'Cement, Concrete'})
+            </p>
           </div>
 
-          <div className="space-y-2.5">
-            {tenders.slice(0, 3).map((t) => (
-              <div
-                key={t.id}
-                className="p-3.5 rounded-xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition-colors flex items-center justify-between gap-3"
-              >
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-100 text-[#7C6BC4]">
-                      {t.category}
-                    </span>
-                    <span className="text-[10px] font-mono text-slate-400">{t.tender_no}</span>
-                  </div>
-                  <h4 className="font-semibold text-xs text-slate-900 mt-1 line-clamp-1">{t.title}</h4>
-                  <div className="text-[11px] text-slate-500 mt-0.5">
-                    Budget: ₹{(t.budget / 10000000).toFixed(2)} Cr | Closes in 14 days
-                  </div>
-                </div>
+          <button
+            onClick={() => onNavigateTab('tender-discovery')}
+            className="text-xs font-bold text-[#6750A4] hover:underline flex items-center gap-1 cursor-pointer"
+          >
+            <span>View All Matches</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
 
+        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          {tenders.slice(0, 4).map((t) => (
+            <div
+              key={t.id}
+              className="porcelain-card porcelain-card-hover p-5 rounded-2xl border border-white/90 bg-white/90 shadow-2xs space-y-3"
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-mono text-[#8C8298] font-bold">{t.tender_no}</span>
+                <span className="text-[9px] font-bold px-2.5 py-0.5 rounded-full bg-[#E6F3EA] text-[#0D5438] border border-[#1E8E62]/20">
+                  96% Eligibility Match
+                </span>
+              </div>
+              <h4 className="font-extrabold text-xs text-[#352A45] line-clamp-2">
+                {t.title}
+              </h4>
+              <div className="flex items-center justify-between text-xs pt-2 border-t border-[#352A45]/[0.05]">
+                <span className="font-extrabold text-[#1E8E62]">
+                  Budget: ₹{(t.budget / 10000000).toFixed(2)} Cr
+                </span>
                 <button
                   onClick={() => onApplyTender(t.id)}
-                  className="px-3 py-1.5 rounded-lg bg-[#7C6BC4] hover:bg-[#6957B7] text-white text-xs font-semibold shrink-0 transition-colors"
+                  className="px-3 py-1.5 rounded-xl bg-[#EEE8FA] hover:bg-[#6750A4] hover:text-white text-[#6750A4] text-xs font-bold transition-all cursor-pointer"
                 >
                   Apply Bid
                 </button>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Live In-App Notifications */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.04)]">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
-            <div>
-              <h3 className="font-bold text-slate-900 text-sm">Real-Time In-App Alerts</h3>
-              <p className="text-[11px] text-slate-400">Evaluation updates, clarifications & deadlines</p>
             </div>
-            <button
-              onClick={() => onNavigateTab('clarifications')}
-              className="text-xs font-semibold text-[#7C6BC4] hover:underline"
-            >
-              Clarifications Inbox
-            </button>
-          </div>
-
-          <div className="space-y-2.5">
-            {notifications.slice(0, 4).map((n) => (
-              <div
-                key={n.id}
-                className={`p-3 rounded-xl border text-xs transition-colors ${
-                  n.type === 'shortlisted'
-                    ? 'bg-emerald-50/50 border-emerald-100 text-emerald-900'
-                    : n.type === 'disqualified'
-                    ? 'bg-rose-50/50 border-rose-100 text-rose-900'
-                    : 'bg-slate-50 border-slate-100 text-slate-800'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <span className="font-bold text-xs flex items-center gap-1.5">
-                    {n.type === 'shortlisted' && <Award className="w-3.5 h-3.5 text-emerald-600" />}
-                    {n.type === 'disqualified' && <AlertCircle className="w-3.5 h-3.5 text-rose-600" />}
-                    {n.title}
-                  </span>
-                  <span className="text-[10px] text-slate-400">
-                    {new Date(n.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </span>
-                </div>
-                <p className="text-[11px] leading-relaxed opacity-90">{n.message}</p>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
     </div>

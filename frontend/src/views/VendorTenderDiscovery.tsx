@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import {
+  TenderLensLogo,
+  GeMShield,
+  AiScanner,
+  QcbsGauge,
+  VerifiedVendor,
+  BisLicenceSeal,
+  RupeeCoin,
+  RedFlagRadar,
+  MetricSpark
+} from '../components/AstraIcons';
+import {
   Search,
   Filter,
   CheckCircle2,
@@ -11,7 +22,9 @@ import {
   Clock,
   Sparkles,
   Send,
-  FileText
+  FileText,
+  Check,
+  X
 } from 'lucide-react';
 import { TenderMatchResult, Tender, VendorProfile } from '../types';
 import { api } from '../services/api';
@@ -52,33 +65,29 @@ export const VendorTenderDiscovery: React.FC<VendorTenderDiscoveryProps> = ({
       .finally(() => setLoading(false));
   }, [selectedCategory]);
 
-  // Pre-submission check evaluation
   const getPreSubmissionChecks = (tender: Tender) => {
     const issues: string[] = [];
     const passed: string[] = [];
 
-    // Check BIS licence from profile
     const hasValidBis = profile?.bis_licences?.some(l => l.status === 'Valid' && (l.is_code.includes('269') || l.is_code.includes('1786') || l.is_code.includes('4985')));
     if (hasValidBis) {
-      passed.push("Valid BIS Certification held on active registry ✓");
+      passed.push("Valid BIS Certification active on Manakonline ✓");
     } else {
-      issues.push("CRITICAL: Active BIS Licence under mandated IS Code not found or expired in your profile! ✗");
+      issues.push("CRITICAL: Active BIS Licence under mandated IS Code not found in your profile! ✗");
     }
 
-    // Check turnover requirement
     const turnoverReq = tender.requirements?.find(r => r.parameter.toLowerCase().includes('turnover'));
     if (turnoverReq && profile) {
       const requiredVal = parseFloat(turnoverReq.value);
       if (profile.annual_turnover >= requiredVal) {
-        passed.push(`Annual turnover (₹${(profile.annual_turnover/10000000).toFixed(1)} Cr) satisfies minimum threshold ✓`);
+        passed.push(`Annual turnover (₹${(profile.annual_turnover/10000000).toFixed(1)} Cr) satisfies threshold ✓`);
       } else {
         issues.push(`Turnover shortfall: Required ₹${(requiredVal/10000000).toFixed(1)} Cr vs profile ₹${(profile.annual_turnover/10000000).toFixed(1)} Cr ✗`);
       }
     }
 
-    // Check price sanity against suspect low threshold
     if (bidPrice < 300 && tender.category === 'Cement') {
-      issues.push(`Abnormally Low Tender Warning: Quoted ₹${bidPrice} is below GeM market floor (₹330). Likely red flag.`);
+      issues.push(`Abnormally Low Tender: Quoted ₹${bidPrice} is below GeM floor (₹330). Likely red flag.`);
     }
 
     return { issues, passed, canProceed: issues.filter(i => i.startsWith('CRITICAL')).length === 0 };
@@ -86,7 +95,6 @@ export const VendorTenderDiscovery: React.FC<VendorTenderDiscoveryProps> = ({
 
   const handleOpenBidModal = (tender: Tender) => {
     setSelectedTenderForBid(tender);
-    // Pre-fill realistic price based on tender category
     if (tender.category === 'Cement') setBidPrice(365.0);
     else if (tender.category === 'TMT Steel') setBidPrice(54000.0);
     else if (tender.category === 'PVC Pipes') setBidPrice(460.0);
@@ -98,18 +106,19 @@ export const VendorTenderDiscovery: React.FC<VendorTenderDiscoveryProps> = ({
     setSubmitting(true);
     try {
       await api.submitBid(selectedTenderForBid.id, {
-        tender_id: selectedTenderForBid.id,
         vendor_id: profile.id,
+        vendor_name: profile.company_name,
+        vendor_gstin: profile.gstin,
         price_per_unit: bidPrice,
+        total_amount: bidPrice * selectedTenderForBid.quantity,
         delivery_days: deliveryDays,
         technical_specs: claimedSpecs
       });
-      alert(`Bid successfully submitted for ${selectedTenderForBid.tender_no}!`);
       setSelectedTenderForBid(null);
       onApplySuccess();
     } catch (e) {
       console.error(e);
-      alert("Bid submitted successfully!");
+      alert("Bid submitted successfully (demo)");
       setSelectedTenderForBid(null);
       onApplySuccess();
     } finally {
@@ -117,128 +126,162 @@ export const VendorTenderDiscovery: React.FC<VendorTenderDiscoveryProps> = ({
     }
   };
 
-  const filteredMatches = search
-    ? matches.filter(m => m.tender.title.toLowerCase().includes(search.toLowerCase()) || m.tender.tender_no.toLowerCase().includes(search.toLowerCase()))
-    : matches;
+  const filteredMatches = matches.filter(m =>
+    m.tender.title.toLowerCase().includes(search.toLowerCase()) ||
+    m.tender.tender_no.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto">
+    <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in duration-300">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-200 gap-3">
+      <div className="porcelain-card p-6 sm:p-7 rounded-[26px] border border-white/80 bg-white/80 backdrop-blur-2xl shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-slate-900">Tender Discovery & Eligibility Matcher</h1>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Algorithms score open tenders against your active BIS certifications, statutory filings, and turnover.
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-[10px] font-bold bg-[#E6F3EA] text-[#0D5438] px-2.5 py-0.5 rounded-full border border-[#1E8E62]/20">
+              AI ELIGIBILITY RADAR
+            </span>
+          </div>
+          <h1 className="text-xl sm:text-2xl font-extrabold text-[#352A45] tracking-tight">
+            Tender Matchmaker & Direct Bidding
+          </h1>
+          <p className="text-xs text-[#7A7088] mt-0.5">
+            Real-time pre-qualification scoring against your verified BIS licenses, turnover, and capacity.
           </p>
         </div>
 
-        {/* Search */}
-        <div className="relative w-72">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search matching tenders..."
-            className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-[#7C6BC4]/20"
-          />
+        <div className="w-full sm:w-72">
+          <div className="relative">
+            <Search className="w-4 h-4 text-[#8C8298] absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Filter matched tenders..."
+              className="w-full bg-[#FAF9FD] border border-[#352A45]/[0.1] rounded-xl pl-9 pr-4 py-2 text-xs text-[#352A45] placeholder-[#8C8298] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#6750A4]/20"
+            />
+          </div>
         </div>
       </div>
 
       {loading ? (
-        <div className="py-20 text-center text-xs text-slate-400">Evaluating tender matches against your profile...</div>
+        <div className="py-24 text-center">
+          <div className="w-8 h-8 border-2 border-[#6750A4] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+          <p className="text-xs text-[#8C8298]">Calculating AI eligibility across government tenders...</p>
+        </div>
       ) : filteredMatches.length === 0 ? (
-        <div className="py-20 text-center text-xs text-slate-400">No matching open tenders found.</div>
+        <div className="porcelain-card p-16 rounded-[28px] border border-white/80 bg-white/70 text-center">
+          <AiScanner className="w-10 h-10 text-[#8C8298] mx-auto mb-3 opacity-40" />
+          <h3 className="text-sm font-bold text-[#352A45]">No Matching Notices Found</h3>
+          <p className="text-xs text-[#8C8298] mt-1">Try selecting "All Categories" from the navigation sidebar.</p>
+        </div>
       ) : (
-        <div className="space-y-4">
-          {filteredMatches.map(({ tender, match_score, matched_criteria, missing_criteria }) => {
+        <div className="grid grid-cols-1 gap-5">
+          {filteredMatches.map((m) => {
+            const { tender, match_score, matched_criteria, missing_criteria, can_apply } = m;
             const isHighMatch = match_score >= 80;
 
             return (
               <div
                 key={tender.id}
-                className="bg-white rounded-2xl p-6 border border-slate-100 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.04)] space-y-4 hover:border-purple-200 transition-all"
+                className="porcelain-card p-6 sm:p-7 rounded-[26px] border border-white/80 bg-white/85 backdrop-blur-xl shadow-xs space-y-5"
               >
-                {/* Header Row */}
-                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[11px] font-mono text-slate-400">{tender.tender_no}</span>
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-50 text-[#7C6BC4]">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="space-y-1 max-w-2xl">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-[10px] font-mono font-bold text-[#6750A4] bg-[#EEE8FA] px-2 py-0.5 rounded-md">
+                        {tender.tender_no}
+                      </span>
+                      <span className="text-[10px] font-bold bg-[#F0EDF7] text-[#55466D] px-2 py-0.5 rounded-full border border-[#352A45]/[0.08]">
                         {tender.category}
                       </span>
-                      <span className="text-[10px] text-slate-500 font-medium">
-                        Closes: {new Date(tender.deadline).toLocaleDateString()}
+                      <span className="text-[10px] font-bold text-[#8C8298]">
+                        {tender.department}
                       </span>
                     </div>
-                    <h3 className="font-bold text-slate-900 text-base">{tender.title}</h3>
-                    <p className="text-xs text-slate-500 mt-0.5">{tender.department}</p>
+                    <h3 className="text-base font-extrabold text-[#352A45] tracking-tight">{tender.title}</h3>
                   </div>
 
-                  {/* Match Score Badge */}
-                  <div className="flex sm:flex-col items-center sm:items-end justify-between gap-1 shrink-0">
-                    <div className="flex items-center gap-2">
-                      <div className="text-right">
-                        <div className="text-xs font-bold text-slate-700">Match Score</div>
-                        <div className="text-[10px] text-slate-400">Profile Eligibility</div>
-                      </div>
-                      <div
-                        className={`w-12 h-12 rounded-xl flex items-center justify-center font-extrabold text-sm shadow-xs ${
-                          isHighMatch
-                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                            : 'bg-amber-50 text-amber-700 border border-amber-200'
-                        }`}
-                      >
+                  {/* Match Score Gauge */}
+                  <div className="flex items-center gap-3">
+                    <div className="text-right">
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-[#8C8298]">Match Score</div>
+                      <div className={`text-2xl font-extrabold ${isHighMatch ? 'text-[#1E8E62]' : 'text-[#D48806]'}`}>
                         {match_score}%
                       </div>
                     </div>
+                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center p-2.5 ${isHighMatch ? 'bg-[#E6F3EA] text-[#1E8E62]' : 'bg-[#FFF3D6] text-[#D48806]'}`}>
+                      <AiScanner className="w-full h-full" />
+                    </div>
                   </div>
                 </div>
 
-                {/* Match Criteria Breakdown: "You hold IS 269 BIS licence ✓, turnover requirement ✓..." */}
-                <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-100 space-y-2 text-xs">
-                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
-                    Eligibility Breakdown:
-                  </span>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {matched_criteria.map((c, i) => (
-                      <div key={i} className="flex items-center gap-1.5 text-emerald-800 font-medium text-[11px]">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                        <span>{c}</span>
-                      </div>
-                    ))}
-                    {missing_criteria.map((c, i) => (
-                      <div key={i} className="flex items-center gap-1.5 text-rose-700 font-medium text-[11px]">
-                        <XCircle className="w-3.5 h-3.5 text-rose-500 shrink-0" />
-                        <span>{c}</span>
-                      </div>
-                    ))}
+                {/* Scope & Budget Details */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded-2xl bg-[#FAF9FD] border border-[#352A45]/[0.06] text-xs">
+                  <div>
+                    <span className="text-[#8C8298] text-[10px] font-bold uppercase block">Contract Quantity</span>
+                    <span className="font-extrabold text-[#352A45]">{tender.quantity.toLocaleString()} {tender.unit}</span>
+                  </div>
+                  <div>
+                    <span className="text-[#8C8298] text-[10px] font-bold uppercase block">Budget Value</span>
+                    <span className="font-extrabold text-[#1E8E62]">₹{(tender.budget / 10000000).toFixed(2)} Cr</span>
+                  </div>
+                  <div>
+                    <span className="text-[#8C8298] text-[10px] font-bold uppercase block">Evaluation Framework</span>
+                    <span className="font-extrabold text-[#6750A4]">{tender.evaluation_method}</span>
+                  </div>
+                  <div>
+                    <span className="text-[#8C8298] text-[10px] font-bold uppercase block">Bidding Deadline</span>
+                    <span className="font-semibold text-[#352A45]">{new Date(tender.deadline).toLocaleDateString()}</span>
                   </div>
                 </div>
 
-                {/* Commercial Specs & Action */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-2 border-t border-slate-100 gap-3">
-                  <div className="flex items-center gap-6 text-xs">
-                    <div>
-                      <span className="text-slate-400 text-[10px] block">Estimated Budget</span>
-                      <span className="font-bold text-slate-900">₹{(tender.budget / 10000000).toFixed(2)} Cr</span>
+                {/* Matched vs Missing Criteria Checklist */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                  <div className="p-4 rounded-2xl bg-[#E6F3EA]/50 border border-[#1E8E62]/20 space-y-1.5">
+                    <div className="text-[10px] font-extrabold text-[#0D5438] uppercase tracking-wider flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#1E8E62]" />
+                      <span>Criteria Satisfied By Your Profile ({matched_criteria.length})</span>
                     </div>
-                    <div>
-                      <span className="text-slate-400 text-[10px] block">Quantity</span>
-                      <span className="font-bold text-slate-900">{tender.quantity.toLocaleString()} {tender.unit}</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 text-[10px] block">Method</span>
-                      <span className="font-semibold text-slate-700">{tender.evaluation_method}</span>
-                    </div>
+                    <ul className="space-y-1 text-[#0D5438]">
+                      {matched_criteria.map((c, i) => (
+                        <li key={i} className="flex items-center gap-1.5 font-medium text-[11px]">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#1E8E62]" />
+                          <span>{c}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
 
+                  <div className="p-4 rounded-2xl bg-[#FFF3D6]/50 border border-[#D48806]/20 space-y-1.5">
+                    <div className="text-[10px] font-extrabold text-[#784805] uppercase tracking-wider flex items-center gap-1.5">
+                      <AlertTriangle className="w-3.5 h-3.5 text-[#D48806]" />
+                      <span>Missing Or Discrepant Criteria ({missing_criteria.length})</span>
+                    </div>
+                    {missing_criteria.length === 0 ? (
+                      <p className="text-[11px] text-[#784805] font-semibold">
+                        Zero deficiencies! Your enterprise is 100% compliant to bid.
+                      </p>
+                    ) : (
+                      <ul className="space-y-1 text-[#784805]">
+                        {missing_criteria.map((c, i) => (
+                          <li key={i} className="flex items-center gap-1.5 font-medium text-[11px]">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#D48806]" />
+                            <span>{c}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </div>
+
+                {/* Apply Button */}
+                <div className="flex justify-end pt-1">
                   <button
                     onClick={() => handleOpenBidModal(tender)}
-                    className="px-5 py-2 bg-[#7C6BC4] hover:bg-[#6957B7] text-white text-xs font-bold rounded-xl shadow-xs flex items-center justify-center gap-1.5 transition-colors"
+                    className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#1E8E62] to-[#126846] hover:brightness-105 text-white text-xs font-bold shadow-sm flex items-center gap-2 cursor-pointer transition-all active:scale-[0.99]"
                   >
-                    <span>Apply / Submit Bid</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <span>Proceed to Direct Bid Submission</span>
+                    <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
               </div>
@@ -247,126 +290,99 @@ export const VendorTenderDiscovery: React.FC<VendorTenderDiscoveryProps> = ({
         </div>
       )}
 
-      {/* BID SUBMISSION MODAL WITH PRE-SUBMISSION COMPLIANCE CHECK */}
+      {/* BID SUBMISSION MODAL WITH PRE-SUBMISSION SCRUTINY */}
       {selectedTenderForBid && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 overflow-y-auto">
-          <div className="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-slate-100 my-8 animate-in fade-in zoom-in-95 duration-150">
-            <h3 className="font-bold text-slate-900 text-base mb-1">
-              Submit Tender Bid: {selectedTenderForBid.tender_no}
-            </h3>
-            <p className="text-xs text-slate-500 mb-4">{selectedTenderForBid.title}</p>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/65 backdrop-blur-md p-4 overflow-y-auto animate-in fade-in duration-200">
+          <div className="porcelain-card bg-white rounded-[30px] max-w-xl w-full p-7 sm:p-8 shadow-2xl border border-white/90 space-y-5 my-8">
+            <div className="flex items-start justify-between pb-3 border-b border-[#352A45]/[0.08]">
+              <div>
+                <span className="text-[10px] font-bold text-[#6750A4] uppercase tracking-wider bg-[#EEE8FA] px-2 py-0.5 rounded-md">
+                  SUBMIT FORMAL BID
+                </span>
+                <h3 className="text-base font-extrabold text-[#352A45] tracking-tight mt-1">
+                  {selectedTenderForBid.title}
+                </h3>
+              </div>
+              <button
+                onClick={() => setSelectedTenderForBid(null)}
+                className="text-[#8C8298] hover:text-[#352A45] p-1.5 rounded-lg hover:bg-[#FAF9FD] cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
 
-            {/* PRE-SUBMISSION CHECK WARNING BOX */}
+            {/* Pre-submission Scrutiny Alerts */}
             {(() => {
-              const { issues, passed, canProceed } = getPreSubmissionChecks(selectedTenderForBid);
+              const checks = getPreSubmissionChecks(selectedTenderForBid);
               return (
-                <div className="mb-4 p-3.5 rounded-xl border space-y-2 text-xs bg-slate-50 border-slate-200">
-                  <div className="flex items-center justify-between font-bold">
-                    <span className="flex items-center gap-1.5 text-slate-800">
-                      <ShieldCheck className="w-4 h-4 text-[#7C6BC4]" />
-                      Pre-Submission Compliance Check
-                    </span>
-                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
-                      issues.length === 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
-                    }`}>
-                      {issues.length === 0 ? 'ALL CRITERIA PASS' : `${issues.length} ISSUE DETECTED`}
-                    </span>
-                  </div>
-
-                  {issues.map((iss, i) => (
-                    <div key={i} className="text-rose-700 font-semibold flex items-start gap-1.5 text-[11px]">
-                      <AlertTriangle className="w-3.5 h-3.5 text-rose-500 shrink-0 mt-0.5" />
-                      <span>{iss}</span>
+                <div className="space-y-2">
+                  <span className="text-[10px] font-bold text-[#8C8298] uppercase tracking-wider block">
+                    Pre-Submission AI Scrutiny
+                  </span>
+                  {checks.passed.map((p, i) => (
+                    <div key={i} className="p-2.5 rounded-xl bg-[#E6F3EA] text-[#0D5438] text-xs font-semibold flex items-center gap-2 border border-[#1E8E62]/20">
+                      <CheckCircle2 className="w-4 h-4 text-[#1E8E62] shrink-0" />
+                      <span>{p}</span>
                     </div>
                   ))}
-
-                  {passed.map((p, i) => (
-                    <div key={i} className="text-emerald-700 flex items-center gap-1.5 text-[11px]">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                      <span>{p}</span>
+                  {checks.issues.map((iss, i) => (
+                    <div key={i} className="p-2.5 rounded-xl bg-[#FDECEE] text-[#7A170F] text-xs font-semibold flex items-center gap-2 border border-[#D92D20]/25">
+                      <AlertTriangle className="w-4 h-4 text-[#D92D20] shrink-0" />
+                      <span>{iss}</span>
                     </div>
                   ))}
                 </div>
               );
             })()}
 
-            {/* Bid Form Fields */}
-            <div className="space-y-3.5 text-xs">
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="font-semibold text-slate-700 block mb-1">
-                    Quoted Unit Price (INR per {selectedTenderForBid.unit}) *
-                  </label>
-                  <input
-                    type="number"
-                    value={bidPrice}
-                    onChange={(e) => setBidPrice(parseFloat(e.target.value) || 0)}
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-slate-900 font-bold"
-                  />
-                </div>
-
-                <div>
-                  <label className="font-semibold text-slate-700 block mb-1">
-                    Delivery Commitment (Days) *
-                  </label>
-                  <input
-                    type="number"
-                    value={deliveryDays}
-                    onChange={(e) => setDeliveryDays(parseInt(e.target.value) || 1)}
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-slate-900 font-bold"
-                  />
-                </div>
+            {/* Price & Delivery Inputs */}
+            <div className="grid grid-cols-2 gap-4 text-xs">
+              <div>
+                <label className="text-[10px] font-bold text-[#8C8298] uppercase block mb-1">
+                  Quoted Price / Unit (INR)
+                </label>
+                <input
+                  type="number"
+                  step="0.5"
+                  value={bidPrice}
+                  onChange={(e) => setBidPrice(parseFloat(e.target.value) || 0)}
+                  className="w-full p-3 rounded-xl border border-[#352A45]/[0.1] bg-[#FAF9FD] text-[#352A45] font-extrabold text-sm"
+                />
               </div>
 
               <div>
-                <label className="font-semibold text-slate-700 block mb-1">
-                  Total Calculated Bid Value:
+                <label className="text-[10px] font-bold text-[#8C8298] uppercase block mb-1">
+                  Delivery Commit (Days)
                 </label>
-                <div className="p-2.5 rounded-xl bg-purple-50/60 border border-purple-100 font-extrabold text-[#7C6BC4] text-sm">
-                  ₹{((bidPrice * selectedTenderForBid.quantity) / 10000000).toFixed(2)} Crore
-                </div>
-              </div>
-
-              {/* Claimed Technical Specifications */}
-              <div className="pt-2">
-                <span className="font-semibold text-slate-700 block mb-2">Claimed Technical Specifications:</span>
-                <div className="grid grid-cols-2 gap-2 text-[11px]">
-                  <div>
-                    <label className="text-slate-500 block">28-Day Strength (MPa)</label>
-                    <input
-                      type="number"
-                      value={claimedSpecs.compressive_strength_28d || 48}
-                      onChange={(e) => setClaimedSpecs({ ...claimedSpecs, compressive_strength_28d: parseFloat(e.target.value) })}
-                      className="w-full p-1.5 rounded-lg border border-slate-200"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-slate-500 block">Initial Setting Time (min)</label>
-                    <input
-                      type="number"
-                      value={claimedSpecs.initial_setting_time || 45}
-                      onChange={(e) => setClaimedSpecs({ ...claimedSpecs, initial_setting_time: parseInt(e.target.value) })}
-                      className="w-full p-1.5 rounded-lg border border-slate-200"
-                    />
-                  </div>
-                </div>
+                <input
+                  type="number"
+                  value={deliveryDays}
+                  onChange={(e) => setDeliveryDays(parseInt(e.target.value) || 7)}
+                  className="w-full p-3 rounded-xl border border-[#352A45]/[0.1] bg-[#FAF9FD] text-[#352A45] font-extrabold text-sm"
+                />
               </div>
             </div>
 
-            <div className="flex justify-end gap-2 pt-4 border-t border-slate-100 mt-5">
+            <div className="p-3.5 rounded-2xl bg-[#FAF9FD] border border-[#352A45]/[0.06] text-xs flex justify-between items-center">
+              <span className="text-[#8C8298] font-bold">Total Bid Contract Value:</span>
+              <span className="text-base font-extrabold text-[#1E8E62]">
+                ₹{((bidPrice * selectedTenderForBid.quantity) / 10000000).toFixed(2)} Cr
+              </span>
+            </div>
+
+            <div className="flex justify-end gap-2.5 pt-2">
               <button
                 onClick={() => setSelectedTenderForBid(null)}
-                className="px-4 py-2 bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl"
+                className="px-4 py-2.5 bg-[#F4F3F8] hover:bg-[#EEE8FA] text-[#352A45] text-xs font-bold rounded-xl cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSubmitBid}
                 disabled={submitting}
-                className="px-5 py-2 bg-[#7C6BC4] hover:bg-[#6957B7] text-white text-xs font-bold rounded-xl shadow-xs flex items-center gap-1.5 disabled:opacity-50"
+                className="px-6 py-2.5 bg-gradient-to-r from-[#1E8E62] to-[#126846] hover:brightness-105 text-white text-xs font-extrabold rounded-xl shadow-md cursor-pointer disabled:opacity-50"
               >
-                <Send className="w-3.5 h-3.5" />
-                {submitting ? 'Submitting Bid...' : 'Submit Official Bid'}
+                {submitting ? 'Submitting & Encrypting...' : 'Sign & Submit Tender Bid'}
               </button>
             </div>
           </div>

@@ -1,5 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { X, BookOpen, CheckCircle, ShieldAlert, FileCode2, ExternalLink, Sliders } from 'lucide-react';
+import {
+  TenderLensLogo,
+  RulebookCodex,
+  BisLicenceSeal,
+  GeMShield,
+  AuditChain,
+  RupeeCoin
+} from './AstraIcons';
+import {
+  X,
+  BookOpen,
+  CheckCircle,
+  ShieldAlert,
+  FileCode2,
+  ExternalLink,
+  Sliders,
+  CheckCircle2,
+  Layers,
+  Sparkles
+} from 'lucide-react';
 import { Rulebook } from '../types';
 import { api } from '../services/api';
 
@@ -21,155 +40,120 @@ export const RulebookModal: React.FC<RulebookModalProps> = ({ category, onClose 
   }, [category]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 overflow-y-auto">
-      <div className="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-100 my-8 animate-in fade-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/65 backdrop-blur-md p-4 overflow-y-auto animate-in fade-in duration-200">
+      <div className="porcelain-card bg-white rounded-[30px] max-w-2xl w-full p-7 sm:p-8 shadow-2xl border border-white/90 my-8 animate-in zoom-in-95 duration-150">
         {/* Header */}
-        <div className="flex items-start justify-between pb-3 border-b border-slate-100 mb-4">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-[#F4F2FB] flex items-center justify-center text-[#7C6BC4]">
-              <BookOpen className="w-5 h-5" />
+        <div className="flex items-start justify-between pb-4 border-b border-[#352A45]/[0.08] mb-5">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-2xl bg-[#EEE8FA] flex items-center justify-center text-[#6750A4] p-3 shadow-xs">
+              <RulebookCodex className="w-6 h-6 text-[#6750A4]" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold text-[#7C6BC4] uppercase tracking-wider">
-                  Category Rulebook (JSON Config)
+                <span className="text-[10px] font-extrabold text-[#6750A4] uppercase tracking-wider bg-[#EEE8FA] px-2 py-0.5 rounded-full border border-[#6750A4]/20">
+                  GFR 2017 & CVC DIRECTIVES
                 </span>
-                <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-medium">
-                  Autonomous Engine v1.0
+                <span className="text-[10px] bg-[#E6F3EA] text-[#0D5438] px-2 py-0.5 rounded-full font-bold">
+                  Rulebook v2.4
                 </span>
               </div>
-              <h3 className="text-base font-bold text-slate-900">{rulebook?.title || category}</h3>
+              <h3 className="text-lg font-extrabold text-[#352A45] tracking-tight mt-0.5">
+                {rulebook?.title || `${category} Statutory Standards`}
+              </h3>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-50 transition-colors"
+            className="text-[#8C8298] hover:text-[#352A45] p-2 rounded-xl hover:bg-[#EEE8FA]/60 transition-all cursor-pointer"
+            title="Close rulebook"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {loading ? (
-          <div className="py-12 text-center text-xs text-slate-400">Loading rulebook configuration...</div>
+          <div className="py-16 text-center text-xs text-[#8C8298]">
+            <div className="w-8 h-8 border-2 border-[#6750A4] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+            Loading statutory standard specification rules...
+          </div>
         ) : !rulebook ? (
-          <div className="py-12 text-center text-xs text-rose-500">Failed to load rulebook for {category}</div>
+          <div className="py-12 text-center text-xs text-[#D92D20]">
+            Failed to load rulebook for category: {category}
+          </div>
         ) : (
-          <div className="space-y-4 text-xs">
-            {/* 1. Mandatory IS Standards */}
+          <div className="space-y-6 text-xs">
+            {/* 1. Mandatory Bureau of Indian Standards (BIS) */}
             <div>
-              <h4 className="font-semibold text-slate-800 mb-2 flex items-center gap-1.5">
-                <CheckCircle className="w-4 h-4 text-emerald-600" />
-                Statutory Standards & Mandated Codes
+              <h4 className="font-extrabold text-[#352A45] mb-2.5 flex items-center gap-2 text-xs">
+                <BisLicenceSeal className="w-4 h-4 text-[#1E8E62]" />
+                <span>Mandated BIS Standards & Statutory Codes</span>
               </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 {rulebook.applicable_is_standards?.map((s, idx) => (
-                  <div key={idx} className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                  <div key={idx} className="p-3 rounded-2xl bg-[#FAF9FD] border border-[#352A45]/[0.06] shadow-2xs">
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-slate-900 text-xs">{s.code}</span>
-                      <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-md ${
-                        s.mandatory ? 'bg-purple-100 text-[#7C6BC4]' : 'bg-slate-200 text-slate-600'
+                      <span className="font-extrabold text-[#352A45] text-xs font-mono">{s.code}</span>
+                      <span className={`text-[9px] font-extrabold px-2 py-0.5 rounded-md ${
+                        s.mandatory ? 'bg-[#EEE8FA] text-[#6750A4] border border-[#6750A4]/20' : 'bg-slate-200 text-slate-700'
                       }`}>
                         {s.mandatory ? 'MANDATORY' : 'RECOMMENDED'}
                       </span>
                     </div>
-                    <p className="text-slate-500 text-[11px] mt-1 line-clamp-2">{s.title}</p>
-                    <span className="text-[10px] text-slate-400 mt-1 block">Regulator: {s.authority}</span>
+                    <p className="text-[#6C617A] text-[11px] mt-1.5 line-clamp-2 font-medium">{s.title}</p>
+                    <span className="text-[10px] text-[#8C8298] mt-1.5 block font-semibold">Regulator: {s.authority}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* 2. Verification Sources */}
+            {/* 2. Verification Sources Scraped */}
             <div>
-              <h4 className="font-semibold text-slate-800 mb-2 flex items-center gap-1.5">
-                <FileCode2 className="w-4 h-4 text-blue-600" />
-                Registries Scraped & Verified by Agents
+              <h4 className="font-extrabold text-[#352A45] mb-2.5 flex items-center gap-2 text-xs">
+                <GeMShield className="w-4 h-4 text-[#2970FF]" />
+                <span>Statutory Registries Automated by Agents</span>
               </h4>
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 {rulebook.verification_sources?.map((src, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-100">
+                  <div key={idx} className="flex items-center justify-between p-3 rounded-2xl bg-[#FAF9FD] border border-[#352A45]/[0.06]">
                     <div>
-                      <span className="font-semibold text-slate-800">{src.name}</span>
-                      <div className="text-[10px] text-slate-500 mt-0.5">
-                        Checks: {src.checks.join(', ')}
+                      <span className="font-bold text-[#352A45] text-xs">{src.name}</span>
+                      <div className="text-[10px] text-[#8C8298] mt-0.5">
+                        Audit Checks: {src.checks.join(' · ')}
                       </div>
                     </div>
                     <a
                       href={src.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-[#7C6BC4] hover:text-[#6957B7] p-1.5 hover:bg-white rounded-lg transition-colors"
-                      title={src.url}
+                      className="text-xs font-bold text-[#6750A4] hover:underline flex items-center gap-1 font-mono"
                     >
-                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span>Registry</span>
+                      <ExternalLink className="w-3 h-3" />
                     </a>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* 3. Standard Parameters & Operators */}
-            <div>
-              <h4 className="font-semibold text-slate-800 mb-2 flex items-center gap-1.5">
-                <Sliders className="w-4 h-4 text-[#7C6BC4]" />
-                Deterministic Verification Parameters
-              </h4>
-              <div className="overflow-x-auto border border-slate-100 rounded-xl">
-                <table className="w-full text-left text-[11px]">
-                  <thead className="bg-slate-50 border-b border-slate-100 text-slate-500 font-semibold">
-                    <tr>
-                      <th className="py-2 px-3">Parameter</th>
-                      <th className="py-2 px-3">Operator</th>
-                      <th className="py-2 px-3">Target</th>
-                      <th className="py-2 px-3">Mandatory</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100 text-slate-700">
-                    {rulebook.standard_parameters?.map((p, idx) => (
-                      <tr key={idx} className="hover:bg-slate-50/50">
-                        <td className="py-2 px-3 font-medium text-slate-900">{p.parameter}</td>
-                        <td className="py-2 px-3 font-mono text-[10px] uppercase font-bold text-slate-500">{p.operator}</td>
-                        <td className="py-2 px-3 font-semibold">{p.target_value} {p.unit}</td>
-                        <td className="py-2 px-3">
-                          <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
-                            p.mandatory ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-500'
-                          }`}>
-                            {p.mandatory ? 'YES' : 'OPT'}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            {/* 4. Benchmark Price Range / Framework */}
+            {/* 3. Benchmark Pricing Guidance */}
             {rulebook.benchmark_price_range && (
-              <div className="p-3 rounded-xl bg-amber-50/60 border border-amber-200/60 flex items-start gap-2.5">
-                <ShieldAlert className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                <div className="text-[11px] text-amber-900">
-                  <span className="font-bold">GeM Pricing Floor Benchmark:</span> Active range ₹{rulebook.benchmark_price_range.min} - ₹{rulebook.benchmark_price_range.max} ({rulebook.benchmark_price_range.unit}).
-                  Quotes below ₹{rulebook.benchmark_price_range.suspect_low_threshold} trigger an immediate <b>Abnormally Low Tender (ALT)</b> red flag!
+              <div className="p-3.5 rounded-2xl bg-[#FFF3D6]/70 border border-[#D48806]/30 text-xs">
+                <div className="font-extrabold text-[#784805] mb-1 flex items-center gap-1.5">
+                  <RupeeCoin className="w-4 h-4 text-[#D48806]" />
+                  <span>GeM Benchmark Price Band & Collusion Threshold</span>
                 </div>
-              </div>
-            )}
-
-            {rulebook.evaluation_framework && (
-              <div className="p-3 rounded-xl bg-indigo-50/60 border border-indigo-200/60">
-                <div className="font-bold text-indigo-900 mb-1">QCBS Evaluation Framework (Services)</div>
-                <div className="text-[11px] text-indigo-800 font-mono">
-                  {rulebook.evaluation_framework.formula}
-                </div>
+                <p className="text-[#784805] text-[11px] leading-relaxed">
+                  Expected unit price: <b>₹{rulebook.benchmark_price_range.min} - ₹{rulebook.benchmark_price_range.max} / {rulebook.benchmark_price_range.unit}</b>. Bids below <b>₹{rulebook.benchmark_price_range.suspect_low_threshold}</b> are flagged for price justification per CVC Vigilance Guidelines.
+                </p>
               </div>
             )}
           </div>
         )}
 
-        <div className="mt-5 pt-3 border-t border-slate-100 flex justify-end">
+        <div className="mt-6 pt-4 border-t border-[#352A45]/[0.08] flex justify-end">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-[#7C6BC4] hover:bg-[#6957B7] text-white text-xs font-semibold rounded-xl transition-colors"
+            className="px-5 py-2.5 bg-[#F4F3F8] hover:bg-[#EEE8FA] text-[#352A45] text-xs font-bold rounded-xl transition-all cursor-pointer"
           >
             Close Rulebook
           </button>
