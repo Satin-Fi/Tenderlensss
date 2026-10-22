@@ -83,7 +83,7 @@ export const TopBar: React.FC<TopBarProps> = ({
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Search tenders, NITs, GSTINs, IS standards..."
+            placeholder="Search tenders, vendors, standards…"
             className="w-full bg-[#F5F3FA]/70 border border-[#352A45]/[0.08] rounded-xl pl-9 pr-9 py-2 text-xs text-[#352A45] placeholder-[#948A9F] focus:outline-none focus:ring-2 focus:ring-[#6750A4]/20 focus:border-[#6750A4] transition-all focus:bg-white"
           />
           <kbd className="absolute right-3 top-1/2 -translate-y-1/2 text-[9px] font-semibold text-[#8C8298] bg-white border border-[#352A45]/[0.1] px-1.5 py-0.5 rounded shadow-xs">

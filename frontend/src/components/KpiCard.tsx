@@ -93,12 +93,12 @@ export const KpiCard: React.FC<KpiCardProps> = ({
         )}
       </div>
 
-      <div className="text-3xl font-extrabold tracking-tight text-[#352A45] mb-1.5 metric-counter">
+      <div className="text-3xl font-bold tracking-[-0.03em] text-[#352A45] mb-1.5 metric-counter" style={{ fontFamily: 'var(--font-display)' }}>
         {value}
       </div>
 
       {caption && (
-        <div className="text-xs text-[#8C8298] font-medium flex items-center justify-between">
+        <div className="text-[11px] text-[#8C8298] font-medium flex items-center justify-between">
           <span>{caption}</span>
           <MetricSpark className="w-4 h-4 opacity-40 text-[#6750A4]" />
         </div>

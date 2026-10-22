@@ -225,12 +225,9 @@ export default function LoginPage({
       `}</style>
 
       <header className="relative z-10 border-b border-[#352A45]/[0.07] bg-white/55 backdrop-blur-xl">
-        <div className="mx-auto flex min-h-12 max-w-[1440px] flex-wrap items-center justify-between gap-x-5 gap-y-2 px-5 py-3 sm:px-8 lg:px-12">
-          <div className="flex items-center gap-2.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6F6679] sm:text-[11px]">
-            <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[#E6F3EA]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#53816A]" />
-            </span>
-            National Procurement Intelligence Network
+        <div className="mx-auto flex min-h-12 max-w-[1440px] items-center justify-between gap-x-5 px-5 py-3 sm:px-8 lg:px-12">
+          <div className="flex items-center gap-2 text-[11px] font-bold text-[#352A45] tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
+            TenderLens<span className="text-[#8A719F]">.</span>
           </div>
 
           <div className="flex items-center gap-2 text-[10px] font-medium tracking-wide text-[#55705F] sm:text-[11px]">
@@ -242,114 +239,73 @@ export default function LoginPage({
 
       <main className="relative mx-auto grid w-full max-w-[1320px] items-center gap-12 px-5 py-10 sm:px-8 sm:py-14 lg:min-h-[calc(100svh-145px)] lg:grid-cols-[1fr_1.08fr] lg:gap-16 lg:px-12 lg:py-12 xl:gap-24">
         <section aria-labelledby="tl-intro-title" className="tl-enter min-w-0">
-          <div className="mb-9 flex items-center gap-3 lg:mb-14">
-            <IconTile className="h-12 w-12 rounded-2xl border border-white bg-white/75 p-2 shadow-[0_6px_20px_-10px_rgba(53,42,69,0.25)]">
+          <div className="mb-9 flex items-center gap-3 lg:mb-12">
+            <IconTile className="h-11 w-11 rounded-2xl border border-white bg-white/75 p-2 shadow-[0_6px_20px_-10px_rgba(53,42,69,0.25)]">
               <TenderLensLogo />
             </IconTile>
             <div>
-              <p className="text-[25px] font-semibold leading-none tracking-[-0.06em]">
+              <p className="text-[26px] font-bold leading-none tracking-[-0.06em]" style={{ fontFamily: 'var(--font-display)' }}>
                 TenderLens<span className="text-[#8A719F]">.</span>
-              </p>
-              <p className="mt-1.5 text-[9px] font-semibold uppercase tracking-[0.22em] text-[#7C7188]">
-                Clarity. Compliance. Confidence.
               </p>
             </div>
           </div>
 
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white bg-white/65 px-3 py-1.5 shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#8C75AC]" />
-            <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#756286]">
-              Procurement, with perspective
-            </span>
-          </div>
-
           <h1
             id="tl-intro-title"
-            className="max-w-lg text-[42px] font-medium leading-[1.08] tracking-[-0.055em] sm:text-[54px] lg:text-[58px]"
+            className="max-w-lg text-[44px] font-semibold leading-[1.06] tracking-[-0.05em] sm:text-[56px] lg:text-[62px]"
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             Public procurement.
             <br />
             <span className="text-[#8C78A3]">Private peace of mind.</span>
           </h1>
 
-          <p className="mt-6 max-w-[400px] text-[15px] leading-7 text-[#776D82]">
-            From the first bid to the final decision. Verify every credential,
-            surface every risk, and move forward with evidence.
+          <p className="mt-5 max-w-[380px] text-[14px] leading-6 text-[#776D82]">
+            Verify every credential, surface every risk, move with evidence.
           </p>
 
-          <div className="tl-porcelain relative mt-9 hidden max-w-[430px] rounded-[24px] border border-white/90 bg-white/55 p-5 backdrop-blur-xl sm:block lg:mt-11">
+          <div className="tl-porcelain relative mt-9 hidden max-w-[430px] rounded-[24px] border border-white/90 bg-white/55 p-5 backdrop-blur-xl sm:block lg:mt-10">
             <div className="absolute -right-5 -top-6 -z-10 h-32 w-32 rounded-full bg-[#FFF3D6]/80 blur-2xl" />
 
-            <div className="flex items-center justify-between gap-3 border-b border-[#352A45]/[0.07] pb-4">
-              <div className="flex items-center gap-2.5">
-                <IconTile className="h-9 w-9 rounded-xl bg-[#EEE8FA] p-1.5">
-                  <AiScanner />
-                </IconTile>
-                <div>
-                  <p className="text-xs font-semibold">An intelligence layer.</p>
-                  <p className="mt-0.5 text-[11px] text-[#81758D]">
-                    Across your entire evaluation.
-                  </p>
-                </div>
-              </div>
-              <span className="rounded-md border border-[#352A45]/[0.06] bg-white/70 px-2 py-1 text-[9px] font-semibold uppercase tracking-wider text-[#81758D]">
-                AI assisted
-              </span>
-            </div>
-
-            <div className="grid grid-cols-2 gap-x-4 gap-y-5 py-5">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-4 pb-4">
               {[
                 {
                   icon: <GeMShield />,
                   title: 'Policy-aligned',
-                  description: 'GFR & GeM checks',
                   color: 'bg-[#E8F0FC]',
                 },
                 {
                   icon: <RedFlagRadar />,
                   title: 'Risk-aware',
-                  description: 'Early red-flag detection',
                   color: 'bg-[#EEE8FA]',
                 },
                 {
                   icon: <RupeeCoin />,
                   title: 'Value-conscious',
-                  description: 'Financial scrutiny',
                   color: 'bg-[#FFF3D6]',
                 },
                 {
                   icon: <VerifiedVendor />,
                   title: 'Evidence-led',
-                  description: 'Vendor verification',
                   color: 'bg-[#E6F3EA]',
                 },
               ].map((feature) => (
-                <div key={feature.title} className="flex items-start gap-2.5">
+                <div key={feature.title} className="flex items-center gap-2.5">
                   <IconTile
-                    className={`h-8 w-8 rounded-lg p-1.5 ${feature.color}`}
+                    className={`h-8 w-8 rounded-xl p-1.5 ${feature.color}`}
                   >
                     {feature.icon}
                   </IconTile>
-                  <div className="pt-0.5">
-                    <p className="text-[11px] font-semibold">{feature.title}</p>
-                    <p className="mt-1 text-[10px] leading-relaxed text-[#82778D]">
-                      {feature.description}
-                    </p>
-                  </div>
+                  <p className="text-[12px] font-semibold text-[#352A45]">{feature.title}</p>
                 </div>
               ))}
             </div>
 
             <div className="flex items-center gap-2 rounded-xl bg-[#E6F3EA]/65 px-3 py-2.5 text-[10px] font-medium text-[#5A7864]">
               <CheckCircle2 className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-              Human judgment at the center. Intelligence all around.
+              Human judgment. AI-powered intelligence.
             </div>
           </div>
-
-          <p className="mt-6 hidden items-center gap-2 text-[11px] text-[#8A8093] lg:flex">
-            <Lock className="h-3 w-3" aria-hidden="true" />
-            Built for accountable decisions. Designed for you.
-          </p>
         </section>
 
         <section
@@ -359,17 +315,15 @@ export default function LoginPage({
         >
           <div className="mb-6 flex items-start justify-between gap-3">
             <div>
-              <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.19em] text-[#96839F]">
-                Your procurement workspace
-              </p>
               <h2
                 id="tl-login-title"
-                className="text-[28px] font-semibold leading-tight tracking-[-0.045em]"
+                className="text-[30px] font-bold leading-tight tracking-[-0.045em]"
+                style={{ fontFamily: 'var(--font-display)' }}
               >
-                Welcome to clarity.
+                Welcome back.
               </h2>
-              <p className="mt-2 text-[13px] leading-relaxed text-[#81758D]">
-                Choose your portal or jump in directly with a verified persona.
+              <p className="mt-1.5 text-[13px] leading-relaxed text-[#81758D]">
+                Choose your portal to continue.
               </p>
             </div>
             <IconTile className="hidden h-11 w-11 rounded-2xl border border-white bg-white/80 p-2 shadow-sm sm:flex">
@@ -382,41 +336,41 @@ export default function LoginPage({
             <button
               type="button"
               onClick={() => switchPortal('officer')}
-              className={`flex-1 flex items-center justify-center gap-2 rounded-xl py-2.5 px-3 text-xs font-semibold transition-all ${
+              className={`flex-1 flex items-center justify-center gap-2 rounded-xl py-3 px-4 text-[13px] font-semibold transition-all ${
                 isOfficer
                   ? 'bg-white text-[#352A45] shadow-sm'
                   : 'text-[#7B7088] hover:text-[#352A45]'
               }`}
             >
               <GeMShield className="w-4 h-4" />
-              <span>Government Officers</span>
+              <span>Officers</span>
             </button>
             <button
               type="button"
               onClick={() => switchPortal('vendor')}
-              className={`flex-1 flex items-center justify-center gap-2 rounded-xl py-2.5 px-3 text-xs font-semibold transition-all ${
+              className={`flex-1 flex items-center justify-center gap-2 rounded-xl py-3 px-4 text-[13px] font-semibold transition-all ${
                 !isOfficer
                   ? 'bg-white text-[#352A45] shadow-sm'
                   : 'text-[#7B7088] hover:text-[#352A45]'
               }`}
             >
               <VerifiedVendor className="w-4 h-4" />
-              <span>Empanelled Suppliers</span>
+              <span>Suppliers</span>
             </button>
           </div>
 
           {/* Quick 1-Click Persona Cards */}
           <div className="mb-6 space-y-2.5">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-[#91859D]">
-              Fast-Access Demo Personas (1-Click)
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-[#91859D]">
+              Quick access
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {visiblePersonas.map((persona, idx) => (
                 <button
                   key={persona.email || idx}
                   type="button"
                   onClick={() => enterAs(persona)}
-                  className="tl-persona group flex items-start gap-3 rounded-2xl border border-white/80 bg-white/70 p-3 text-left transition-all hover:-translate-y-0.5 hover:border-[#6750A4]/30"
+                  className="tl-persona group flex items-center gap-3 rounded-2xl border border-white/80 bg-white/70 p-3 text-left transition-all hover:-translate-y-0.5 hover:border-[#6750A4]/30"
                 >
                   <div
                     className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl font-bold text-xs ${
@@ -426,14 +380,13 @@ export default function LoginPage({
                     {persona.initials || 'TL'}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-xs font-bold text-[#352A45] group-hover:text-[#6750A4]">
+                    <p className="truncate text-[13px] font-semibold text-[#352A45] group-hover:text-[#6750A4]">
                       {persona.name}
                     </p>
-                    <p className="truncate text-[10px] text-[#81758D]">
-                      {persona.organization}
-                    </p>
-                    <span className="mt-1 inline-flex items-center gap-1 text-[9px] font-semibold text-[#1E8E62]">
-                      <span className="h-1 w-1 rounded-full bg-[#1E8E62]" /> Active
+                    <span className={`mt-0.5 inline-flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded-full ${
+                      persona.portal === 'officer' ? 'bg-[#E8F0FC] text-[#2970FF]' : 'bg-[#E6F3EA] text-[#1E8E62]'
+                    }`}>
+                      {persona.portal === 'officer' ? 'Officer' : 'Vendor'}
                     </span>
                   </div>
                   <ArrowRight className="h-3.5 w-3.5 text-[#B2A8C0] transition-transform group-hover:translate-x-0.5 group-hover:text-[#6750A4]" />

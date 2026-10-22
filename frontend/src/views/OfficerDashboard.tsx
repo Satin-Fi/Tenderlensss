@@ -65,13 +65,13 @@ export const OfficerDashboard: React.FC<OfficerDashboardProps> = ({
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EEE8FA] text-[#6750A4] text-xs font-bold border border-[#6750A4]/20">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>GFR 2017 & CVC Automated Procurement Compliance Engine</span>
+              <span>GFR 2017 · CVC Compliance Engine Active</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#352A45]">
-              Welcome, {currentUser?.name || 'Shri A.K. Sharma'}
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#352A45]" style={{ fontFamily: 'var(--font-display)' }}>
+              Welcome, {currentUser?.name?.split(' ').slice(-1)[0] || 'Officer'}
             </h1>
-            <p className="text-xs sm:text-sm text-[#7A7088] leading-relaxed">
-              Supervising <span className="font-semibold text-[#352A45]">{currentUser?.department || 'Ministry of Jal Shakti / CPWD'}</span>. AI document scrutiny is active across 4 tenders with real-time BIS registry and MCA debarment verification.
+            <p className="text-[13px] text-[#7A7088]">
+              {currentUser?.department || 'Ministry of Jal Shakti / CPWD'} · AI scrutiny active across 4 tenders
             </p>
           </div>
 
@@ -145,14 +145,14 @@ export const OfficerDashboard: React.FC<OfficerDashboardProps> = ({
         <div className="space-y-6">
           <TutorialCard />
           <MilestoneWidget
-            title="Procurement Integrity Milestone"
+            title="Procurement Integrity"
             metric="₹18.5 Cr"
-            description="Scrutinized 50,000 bags OPC cement against BIS IS 269 registry. Prevented ₹1.70 Cr award with expired licensing."
+            description="Scrutinized 50,000 bags OPC cement against BIS IS 269. Prevented ₹1.70 Cr irregular award."
             milestoneLabel="Scrutiny progress to annual target"
             startLabel="₹10 Cr"
             endLabel="₹25 Cr"
             percentage={74}
-            secondaryTitle="Statutory Registry Clearance Rate"
+            secondaryTitle="Statutory Registry Clearance"
             secondaryPercentage={80}
           />
         </div>
@@ -164,13 +164,13 @@ export const OfficerDashboard: React.FC<OfficerDashboardProps> = ({
         <div className="p-6 border-b border-[#352A45]/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="font-extrabold text-[#352A45] text-base">Procurement Tenders Ledger</h3>
+              <h3 className="font-bold text-[#352A45] text-base" style={{ fontFamily: 'var(--font-display)' }}>Procurement Tenders Ledger</h3>
               <span className="text-[10px] font-bold bg-[#EEE8FA] text-[#6750A4] px-2.5 py-0.5 rounded-full border border-[#6750A4]/20">
                 {filteredTenders.length} Active
               </span>
             </div>
-            <p className="text-xs text-[#7A7088] mt-1">
-              Filter: <span className="font-semibold text-[#352A45]">{selectedCategory}</span> · Rulebook auto-loaded for all categories
+            <p className="text-[11px] text-[#7A7088] mt-1">
+              {selectedCategory} · GFR Rulebook auto-loaded
             </p>
           </div>
 

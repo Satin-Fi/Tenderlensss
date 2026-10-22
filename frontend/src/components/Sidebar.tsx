@@ -42,30 +42,25 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const isOfficer = currentUser?.role === 'officer';
 
   const categories = [
-    { name: 'Cement', code: 'IS 269, IS 4031', tag: 'Full Demo', color: 'bg-[#EEE8FA] text-[#6750A4]' },
-    { name: 'TMT Steel', code: 'IS 1786', tag: 'IS Standard', color: 'bg-[#E8F0FC] text-[#2970FF]' },
-    { name: 'PVC Pipes', code: 'IS 4985', tag: 'IS Standard', color: 'bg-[#FFF3D6] text-[#D48806]' },
-    { name: 'Services', code: 'QCBS / ISO', tag: 'GFR 2017', color: 'bg-[#E6F3EA] text-[#1E8E62]' }
+    { name: 'Cement', tag: 'Full Demo', color: 'bg-[#EEE8FA] text-[#6750A4]' },
+    { name: 'TMT Steel', tag: 'IS Standard', color: 'bg-[#E8F0FC] text-[#2970FF]' },
+    { name: 'PVC Pipes', tag: 'IS Standard', color: 'bg-[#FFF3D6] text-[#D48806]' },
+    { name: 'Services', tag: 'GFR 2017', color: 'bg-[#E6F3EA] text-[#1E8E62]' }
   ];
 
   return (
     <aside className="w-68 bg-[#FBFBFE]/90 backdrop-blur-2xl border-r border-[#352A45]/[0.08] flex flex-col h-screen sticky top-0 shrink-0 select-none transition-all z-20">
       {/* Brand Header */}
-      <div className="h-20 px-6 flex items-center justify-between border-b border-[#352A45]/[0.06]">
+      <div className="h-16 px-5 flex items-center border-b border-[#352A45]/[0.06]">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#6750A4] to-[#8C75AC] flex items-center justify-center text-white shadow-md shadow-[#6750A4]/25 p-2">
-            <TenderLensLogo className="w-6 h-6 text-white" />
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#6750A4] to-[#8C75AC] flex items-center justify-center text-white shadow-md shadow-[#6750A4]/25 p-2 shrink-0">
+            <TenderLensLogo className="w-5 h-5 text-white" />
           </div>
-          <div>
-            <div className="font-extrabold text-[#352A45] text-[17px] tracking-tight flex items-center gap-1.5">
-              TenderLens
-              <span className="text-[9px] bg-[#EEE8FA] text-[#6750A4] font-bold px-1.5 py-0.5 rounded-full border border-[#6750A4]/20">
-                AI PRO
-              </span>
-            </div>
-            <div className="text-[10px] text-[#7E738B] font-medium flex items-center gap-1">
-              <span>National Procurement Engine</span>
-            </div>
+          <div className="font-display font-bold text-[#352A45] text-[18px] tracking-tight leading-none flex items-center gap-1.5">
+            TenderLens
+            <span className="text-[8px] bg-[#EEE8FA] text-[#6750A4] font-bold px-1.5 py-0.5 rounded-full border border-[#6750A4]/20 tracking-wide">
+              AI
+            </span>
           </div>
         </div>
       </div>
@@ -85,7 +80,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             {/* Common Dashboard */}
             <button
               onClick={() => onSelectTab('dashboard')}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-[13px] font-medium transition-all ${
                 currentTab === 'dashboard'
                   ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
                   : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
@@ -104,7 +99,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <>
                 <button
                   onClick={() => onSelectTab('upload-nit')}
-                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-[13px] font-medium transition-all ${
                     currentTab === 'upload-nit'
                       ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
                       : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
@@ -121,7 +116,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                 <button
                   onClick={() => onSelectTab('tenders')}
-                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-[13px] font-medium transition-all ${
                     currentTab === 'tenders'
                       ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
                       : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
@@ -135,7 +130,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                 <button
                   onClick={() => onSelectTab('evaluation')}
-                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-[13px] font-medium transition-all ${
                     currentTab === 'evaluation'
                       ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
                       : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
@@ -152,7 +147,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                 <button
                   onClick={() => onSelectTab('audit-log')}
-                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-[13px] font-medium transition-all ${
                     currentTab === 'audit-log'
                       ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
                       : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
@@ -168,7 +163,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <>
                 <button
                   onClick={() => onSelectTab('tender-discovery')}
-                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-[13px] font-medium transition-all ${
                     currentTab === 'tender-discovery'
                       ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
                       : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
@@ -185,7 +180,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                 <button
                   onClick={() => onSelectTab('vendor-profile')}
-                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-[13px] font-medium transition-all ${
                     currentTab === 'vendor-profile'
                       ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
                       : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
@@ -199,7 +194,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                 <button
                   onClick={() => onSelectTab('doc-verify')}
-                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-[13px] font-medium transition-all ${
                     currentTab === 'doc-verify'
                       ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
                       : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
@@ -213,7 +208,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                 <button
                   onClick={() => onSelectTab('my-applications')}
-                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-[13px] font-medium transition-all ${
                     currentTab === 'my-applications'
                       ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
                       : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
@@ -229,7 +224,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
             <button
               onClick={() => onSelectTab('clarifications')}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-[13px] font-medium transition-all ${
                 currentTab === 'clarifications'
                   ? 'bg-white text-[#352A45] shadow-[0_4px_16px_-4px_rgba(53,42,69,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] border border-[#352A45]/[0.08]'
                   : 'text-[#6C617A] hover:text-[#352A45] hover:bg-white/60'
@@ -263,7 +258,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 return (
                   <div
                     key={cat.name}
-                    className={`group flex items-center justify-between px-3 py-2 rounded-2xl text-xs font-medium transition-all ${
+                    className={`group flex items-center justify-between px-3 py-2 rounded-2xl text-[13px] font-medium transition-all ${
                       isSelected
                         ? 'bg-[#EEE8FA] text-[#6750A4] font-semibold border border-[#6750A4]/20'
                         : 'text-[#6C617A] hover:bg-white/70 hover:text-[#352A45]'
@@ -313,25 +308,25 @@ export const Sidebar: React.FC<SidebarProps> = ({
             className="w-9 h-9 rounded-xl object-cover ring-2 ring-[#EEE8FA]"
           />
           <div className="flex-1 min-w-0">
-            <div className="text-xs font-bold text-[#352A45] truncate">
+            <div className="text-[13px] font-bold text-[#352A45] truncate">
               {currentUser?.name || "Shri A.K. Sharma"}
             </div>
             <div className="text-[10px] text-[#7A7088] font-medium capitalize flex items-center gap-1.5">
               <span className={`w-1.5 h-1.5 rounded-full ${isOfficer ? 'bg-[#1E8E62]' : 'bg-[#2970FF]'}`} />
-              {isOfficer ? 'Govt Procurement Officer' : 'Empanelled Vendor'}
+              {isOfficer ? 'Procurement Officer' : 'Empanelled Vendor'}
             </div>
           </div>
         </div>
 
-        {/* Live System Telemetry Status */}
         <div className="mt-2.5 flex items-center justify-between text-[9px] text-[#8C8298] px-1 font-medium">
           <span className="flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-[#1E8E62] animate-pulse" />
             GeM v3.2 Synced
           </span>
-          <span>Rule 144(xi) Audit</span>
+          <span>GFR 2017 Active</span>
         </div>
       </div>
     </aside>
   );
 };
+
