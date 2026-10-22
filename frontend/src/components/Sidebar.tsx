@@ -49,7 +49,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   return (
-    <aside className="w-68 bg-[#FBFBFE]/90 backdrop-blur-2xl border-r border-[#352A45]/[0.08] flex flex-col h-screen sticky top-0 shrink-0 select-none transition-all z-20">
+    <aside className="w-72 bg-[#FBFBFE]/90 backdrop-blur-2xl border-r border-[#352A45]/[0.08] flex flex-col h-screen sticky top-0 shrink-0 select-none transition-all z-20">
       {/* Brand Header */}
       <div className="h-16 px-5 flex items-center border-b border-[#352A45]/[0.06]">
         <div className="flex items-center gap-3">
@@ -266,10 +266,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   >
                     <button
                       onClick={() => onSelectCategory(cat.name)}
-                      className="flex-1 text-left flex items-center gap-2 truncate"
+                      className="flex-1 min-w-0 text-left flex items-center gap-2"
                     >
-                      <span className={`w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-[#6750A4]' : 'bg-[#D2C8E0]'}`} />
-                      <span className="truncate">{cat.name}</span>
+                      <span className={`w-1.5 h-1.5 shrink-0 rounded-full ${isSelected ? 'bg-[#6750A4]' : 'bg-[#D2C8E0]'}`} />
+                      <span className="whitespace-nowrap truncate">{cat.name}</span>
                     </button>
 
                     <button
@@ -277,10 +277,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         e.stopPropagation();
                         onOpenRulebook(cat.name);
                       }}
-                      className="text-[10px] text-[#8C8298] hover:text-[#6750A4] px-2 py-0.5 rounded-lg hover:bg-white/90 border border-transparent hover:border-[#6750A4]/20 transition-all flex items-center gap-1"
+                      className="shrink-0 text-[10px] text-[#8C8298] hover:text-[#6750A4] px-2 py-0.5 rounded-lg hover:bg-white/90 border border-transparent hover:border-[#6750A4]/20 transition-all"
                       title={`Inspect ${cat.name} GFR Rulebook`}
                     >
-                      <span>Rules</span>
+                      Rules
                     </button>
                   </div>
                 );
