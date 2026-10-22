@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --primary: #6750A4;
+    --primary-hover: #514080;
+    --primary-light: #E9E2F5;
+    --bg-page: #E9E7EF;
+    --card-border: #D8D3E3;
+  }
+  body {
+    background-color: var(--bg-page);
+    color: #252238;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Consistent interactive affordances */
+button, [role="button"], a, select, summary, label[for], [onclick], .cursor-pointer { cursor: pointer; }
+button:disabled, [aria-disabled="true"] { cursor: not-allowed; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #C4BED2; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #9B92B2; }
+@keyframes pulseSubtle { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+.animate-pulse-subtle { animation: pulseSubtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+/* Login page: muted lavender, warm ivory and deep plum */
+.login-shell { background: radial-gradient(ellipse at top left, #DCD5EC 0%, #E9E7EF 43%, #E4E0E9 100%); }
+.login-brand-mark { background: linear-gradient(145deg, #6750A4, #8973B8); box-shadow: 0 12px 26px #6750A433; }
+.login-pill { color: #5B478E; background: #F0EBF7; border: 1px solid #D8CDEB; }
+.login-card { background: #F9F7FB; border: 1px solid #D8D2E4; box-shadow: 0 24px 60px -30px #392A5D55; }
+.login-eyebrow, .login-accent { color: #6750A4; }
+.portal-choice { display: block; width: 100%; text-align: left; padding: 17px; border-radius: 17px; border: 1.5px solid #D8D4E2; background: #F2F0F6; transition: border-color .18s, background .18s, transform .18s, box-shadow .18s; }
+.portal-choice:hover { border-color: #9482BD; background: #F8F5FC; transform: translateY(-1px); box-shadow: 0 8px 20px #4B3B7020; }
+.portal-choice-active { border-color: #6750A4; background: #EEE8F7; box-shadow: 0 0 0 2px #6750A41A; }
+.portal-choice-active.portal-choice-vendor { border-color: #438675; background: #EAF4F0; }
+.portal-icon { display: inline-flex; width: 38px; height: 38px; border-radius: 12px; align-items: center; justify-content: center; margin-bottom: 12px; }
+.officer-icon { background: #E5DDF3; color: #6750A4; }
+.vendor-icon { background: #DCEEE7; color: #347A67; }
+.login-form-panel { padding: 18px; border: 1px solid #DCD5E7; border-radius: 18px; background: #F0EDF5; }
+.login-demo-badge { display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px; border-radius: 999px; color: #347A67; background: #DDEFE7; font-size: 10px; font-weight: 700; white-space: nowrap; }
+.login-input-wrap { display: flex; align-items: center; gap: 10px; padding: 0 12px; min-height: 44px; background: #FBFAFD; border: 1px solid #D4CDDF; border-radius: 11px; transition: border-color .15s, box-shadow .15s; }
+.login-input-wrap:focus-within { border-color: #8270B1; box-shadow: 0 0 0 3px #6750A41A; }
+.login-input { width: 100%; min-width: 0; outline: none; background: transparent; color: #252238; font-size: 13px; }
+.login-input::placeholder { color: #A09AAC; }
+.password-toggle { display: inline-flex; align-items: center; justify-content: center; padding: 4px; color: #777086; }
+.login-submit { display: flex; align-items: center; justify-content: center; gap: 9px; width: 100%; min-height: 45px; border-radius: 11px; color: white; background: linear-gradient(100deg, #6750A4, #7861AC); font-size: 13px; font-weight: 700; box-shadow: 0 7px 15px #6750A42B; transition: filter .15s, transform .15s; }
+.login-submit:hover { filter: brightness(.95); transform: translateY(-1px); }
+.login-error { padding: 9px 11px; border-radius: 9px; border: 1px solid #E7B7B7; background: #FFF0F0; color: #A33131; font-size: 12px; }
+.login-instruction { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border-radius: 12px; background: #EDE9F3; color: #665B7D; font-size: 12px; }
+.login-credentials { padding-top: 2px; }
+.vendor-chip { max-width: 100%; padding: 7px 9px; border-radius: 9px; border: 1px solid #D5CFDF; color: #514A61; background: #F9F7FB; font-size: 10px; text-align: left; }
+.vendor-chip:hover, .vendor-chip-active { border-color: #8270B1; background: #EAE4F4; color: #4D3C7C; }
